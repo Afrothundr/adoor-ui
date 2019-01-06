@@ -1,10 +1,11 @@
-import React from 'react';
+
 import './Login.scss';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import logo from '../../../images/logo.png';
+import React from 'react';
 
 const styles = theme => ({
     button: {
@@ -29,24 +30,23 @@ const styles = theme => ({
     },
 });
 
-export const Login = props => {
-    const { classes } = props;
-    return (
-        <div className="login">
-            <img className="login-logo" alt="" src={logo}></img>
-            <div>
-                <Button className={classes.button}>
-                    log in
-            </Button>
-                <Button color="primary" className={classes.button}>
-                    sign up
-            </Button>
-            </div>
+export class Login extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            showLoginForm: true,
+            showSignUpForm: false
+        }
+    }
+
+    displayForm() {
+        const { classes } = this.props;
+        const loginForm =
             <form className={classes.container} noValidate autoComplete="off">
                 <TextField
                     label="email"
                     className={classes.textField}
-                    value=""
+
                     margin="normal"
                     variant="filled"
                 />
@@ -54,14 +54,99 @@ export const Login = props => {
                     label="password"
                     className={classes.textField}
                     type="password"
-                    value=""
+
                     margin="normal"
                     variant="filled"
                 />
             </form>
+        const signUpForm =
+            <form className={classes.container} noValidate autoComplete="off">
+                <div>
+                    <TextField
+                        label="first name"
+                        className={classes.textField}
+                        margin="normal"
+                        variant="filled"
+                    />
+                    <TextField
+                        label="last name"
+                        className={classes.textField}
 
-        </div>
-    )
+                        margin="normal"
+                        variant="filled"
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="email"
+                        className={classes.textField}
+
+                        margin="normal"
+                        variant="filled"
+                        type="email"
+                    />
+                    <TextField
+                        label="phone number"
+                        className={classes.textField}
+
+                        margin="normal"
+                        variant="filled"
+                        type="tele"
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="password"
+                        className={classes.textField}
+                        type="password"
+
+                        margin="normal"
+                        variant="filled"
+                    />
+                    <TextField
+                        label="confirm password"
+                        className={classes.textField}
+                        type="password"
+
+                        margin="normal"
+                        variant="filled"
+                    />
+                </div>
+            </form>
+
+        return this.state.showLoginForm ? loginForm : signUpForm;
+    }
+
+    handleLoginClick() {
+        this.setState({ showLoginForm: true, showSignUpForm: false })
+    }
+
+    handleSignUpClick() {
+        this.setState({ showLoginForm: false, showSignUpForm: true })
+    }
+
+    render() {
+        const { classes } = this.props;
+        const activeStyle = {
+            borderBottom: '3px solid #C9283E'
+        };
+        return (
+            <div className="login">
+                <img className="login-logo" alt="" src={logo}></img>
+                <div>
+                    <Button style={this.state.showLoginForm ? activeStyle : {}} className={classes.button} onClick={this.handleLoginClick.bind(this)}>
+                        log in
+                    </Button>
+                    <Button style={this.state.showSignUpForm ? activeStyle : {}} className={classes.button} onClick={this.handleSignUpClick.bind(this)}>
+                        sign up
+                    </Button>
+                </div>
+                {
+                    this.displayForm()
+                }
+            </div>
+        )
+    }
 }
 
 Login.propTypes = {
