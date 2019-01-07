@@ -47,8 +47,8 @@ const LoginForm = (props) => {
             margin="normal"
             variant="filled"
         />
-        <Button className={classes.button}>
-            log in
+        <Button color="primary" variant="contained" className={classes.button}>
+            submit
         </Button>
         </form>
     );

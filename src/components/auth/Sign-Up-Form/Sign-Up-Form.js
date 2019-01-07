@@ -83,8 +83,8 @@ const SignUpForm = (props) => {
                         variant="filled"
                     />
                 </div>
-        <Button className={classes.button}>
-            sign up
+        <Button color="primary"  variant="contained" className={classes.button}>
+            submit
         </Button>
         </form>
     );
