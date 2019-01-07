@@ -1,0 +1,9 @@
+form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    input {
+        background-color: white;
+        opacity: .8;
+    }
+}

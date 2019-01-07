@@ -3,9 +3,10 @@ import './Login.scss';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import logo from '../../../images/logo.png';
 import React from 'react';
+import LoginForm from '../Login-Form/Login-Form';
+import SignUpForm from '../Sign-Up-Form/Sign-Up-Form';
 
 const styles = theme => ({
     button: {
@@ -39,84 +40,6 @@ export class Login extends React.Component {
         }
     }
 
-    displayForm() {
-        const { classes } = this.props;
-        const loginForm =
-            <form className={classes.container} noValidate autoComplete="off">
-                <TextField
-                    label="email"
-                    className={classes.textField}
-
-                    margin="normal"
-                    variant="filled"
-                />
-                <TextField
-                    label="password"
-                    className={classes.textField}
-                    type="password"
-
-                    margin="normal"
-                    variant="filled"
-                />
-            </form>
-        const signUpForm =
-            <form className={classes.container} noValidate autoComplete="off">
-                <div>
-                    <TextField
-                        label="first name"
-                        className={classes.textField}
-                        margin="normal"
-                        variant="filled"
-                    />
-                    <TextField
-                        label="last name"
-                        className={classes.textField}
-
-                        margin="normal"
-                        variant="filled"
-                    />
-                </div>
-                <div>
-                    <TextField
-                        label="email"
-                        className={classes.textField}
-
-                        margin="normal"
-                        variant="filled"
-                        type="email"
-                    />
-                    <TextField
-                        label="phone number"
-                        className={classes.textField}
-
-                        margin="normal"
-                        variant="filled"
-                        type="tele"
-                    />
-                </div>
-                <div>
-                    <TextField
-                        label="password"
-                        className={classes.textField}
-                        type="password"
-
-                        margin="normal"
-                        variant="filled"
-                    />
-                    <TextField
-                        label="confirm password"
-                        className={classes.textField}
-                        type="password"
-
-                        margin="normal"
-                        variant="filled"
-                    />
-                </div>
-            </form>
-
-        return this.state.showLoginForm ? loginForm : signUpForm;
-    }
-
     handleLoginClick() {
         this.setState({ showLoginForm: true, showSignUpForm: false })
     }
@@ -142,7 +65,7 @@ export class Login extends React.Component {
                     </Button>
                 </div>
                 {
-                    this.displayForm()
+                    this.state.showLoginForm ? <LoginForm hidden={this.state.showLoginForm}/> : <SignUpForm hidden={!this.state.showLoginForm}/>
                 }
             </div>
         )
