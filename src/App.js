@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.scss';
-import Login from './components/auth/Login/Login';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+import Login from './modules/auth/components/Login/Login';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -11,6 +13,9 @@ const theme = createMuiTheme({
     secondary: {
       main: '#f44336',
     },
+  },
+    typography: {
+    useNextVariants: true,
   },
 });
 
