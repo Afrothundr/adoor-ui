@@ -7,11 +7,8 @@ import React from 'react';
 import LoginForm from '../Login-Form/Login-Form';
 import SignUpForm from '../Sign-Up-Form/Sign-Up-Form';
 import Button from '@material-ui/core/Button';
-import { adoorApi, apiKey } from '../../../../App';
-import axios from 'axios';
 import { connect } from 'react-redux'
 import { login } from '../../redux/actions/auth.actions';
-import authReducer from '../../redux/reducers/auth.reducers';
 
 const styles = theme => ({
     button: {
@@ -64,43 +61,6 @@ export class Login extends React.Component {
             console.log(this.props);
         }, 1000);
         this.setState();
-        // const LOGIN = `
-        // mutation {
-        //     sellerLogin(
-        //         email: "${email}",
-        //         password: "${password}",
-        //         apiKey: "${apiKey}"
-        //     )
-        // }
-        // `;
-        // adoorApi
-        //     .post('', { query: LOGIN })
-        //     .then(result => {
-        //         this.setState({ loadingLogin: false })
-        //         if (!result.errors) {
-        //             this.setState({token: result.data.data.sellerLogin})
-        //             const authApiCall = axios.create({
-        //                 baseURL: 'https://adoor-api.herokuapp.com/api',
-        //                 headers: {'Authorization': "bearer " + this.state.token}
-        //               });
-        //             const getProfile = `
-        //              {
-        //                 seller {
-        //                     firstName
-        //                 }
-        //             }
-        //             `;
-        //             authApiCall
-        //                 .post('', {query: getProfile})
-        //                 .then(res => {
-        //                     console.log(res);
-        //                     if (!result.errors) {
-        //                         this.setState({name: res.data.data.seller.firstName})
-        //                     }
-        //                 })
-        //         }
-        //         console.log(result)
-        //     });
     }
 
     render() {

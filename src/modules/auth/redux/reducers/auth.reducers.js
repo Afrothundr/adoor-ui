@@ -1,6 +1,6 @@
 
 import { SET_AUTH_TOKEN } from '../actions/auth.action.types';
-import intialState from './intial-state';
+import intialState from '../../../../redux/store/intial-state';
 
 export default function authReducer(state = intialState.auth, action) {
     switch (action.type) {

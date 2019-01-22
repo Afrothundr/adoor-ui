@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, SET_AUTH_TOKEN } from './auth.action.types';
+import { LOG_OUT, SET_AUTH_TOKEN } from './auth.action.types';
 import axios from 'axios';
 import { environment } from '../../../../environments';
 
