@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Login from './modules/auth/components/Login/Login';
 import { Dashboard } from './modules/dashboard/components/Dashboard/Dashboard';
+import AuthenticatedRoute from './modules/auth/protected-route';
 
 
 const theme = createMuiTheme({
@@ -21,15 +22,17 @@ const theme = createMuiTheme({
   },
 });
 
-class App extends Component {
+
+
+class App extends Component {git 
   render() {
     return (
       <MuiThemeProvider theme={theme}>
         <div className="App">
           <Router>
-            <div class="App-Main">
+            <div className="App-Main">
               <Route path="/login" component={Login} />
-              <Route path="/dashboard" component={Dashboard} />
+              <AuthenticatedRoute path="/dashboard" component={Dashboard} />
             </div>
           </Router>
         </div>

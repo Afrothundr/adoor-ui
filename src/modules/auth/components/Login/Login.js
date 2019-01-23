@@ -9,6 +9,7 @@ import SignUpForm from '../Sign-Up-Form/Sign-Up-Form';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
 import { login } from '../../redux/actions/auth.actions';
+import { Redirect } from 'react-router-dom'
 
 const styles = theme => ({
     button: {
@@ -41,7 +42,8 @@ export class Login extends React.Component {
             showSignUpForm: false,
             loadingLogin: false,
             name: '',
-            token: ''
+            token: '',
+            loggedIn: false
         }
     }
 
@@ -60,7 +62,7 @@ export class Login extends React.Component {
         setTimeout(() => {
             console.log(this.props);
         }, 1000);
-        this.setState();
+        this.setState({loggedIn: true});
     }
 
     render() {
@@ -68,6 +70,9 @@ export class Login extends React.Component {
         const activeStyle = {
             borderBottom: '3px solid #C9283E'
         };
+        if (this.props.token) {
+            return <Redirect to='/dashboard' />
+          }
         return (
             <div className="login">
                 <img className="login-logo" alt="" src={logo}></img>
@@ -86,7 +91,7 @@ export class Login extends React.Component {
                             <SignUpForm hidden={!this.state.showLoginForm} />
                     }
                 </div>
-                <h1>{this.props.token}</h1>
+                <p>{this.props.token}</p>
 
             </div>
         )

@@ -5,11 +5,18 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux';
 import configureStore from './redux/store/configure-store';
+import { loadState, saveState } from './localStorage';
 
 
+const persistedState = loadState();
 
+const store = configureStore(
+    persistedState
+);
 
-const store = configureStore();
+store.subscribe(() => {
+    saveState(store.getState())
+})
 
 ReactDOM.render(
     <Provider store={store}>
