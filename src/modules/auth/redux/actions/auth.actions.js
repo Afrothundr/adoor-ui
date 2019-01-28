@@ -1,15 +1,19 @@
-import { LOG_OUT, SET_AUTH_TOKEN } from './auth.action.types';
+import { LOG_OUT, SET_AUTH_TOKEN, LOG_IN_FAILURE, LOG_IN_PENDING } from './auth.action.types';
 import axios from 'axios';
 import { environment } from '../../../../environments';
-
-
-// export const login = (userEmail, userPassword) => {
-//     return { type: LOG_IN, email: userEmail, password: userPassword}
-// }
 
 export const setAuthToken = token => {
     return {type: SET_AUTH_TOKEN, token}
 }
+
+export const loginPending = isPending => ({
+    type: LOG_IN_PENDING,
+    isPending
+});
+
+export const loginFailure = () => ({
+    type: LOG_IN_FAILURE
+});
 
 export const logOut = () => ({
     type: LOG_OUT
@@ -29,10 +33,19 @@ export const login = (email, password) => {
         }
         `;
     return dispatch => {
+        dispatch(loginPending(true));
         return adoorApi.post('', { query: LOGIN })
             .then(result => {
-                const token = result.data.data.sellerLogin;
-                dispatch(setAuthToken(token))
+                dispatch(loginPending(false));
+                if (!result.data.error) {
+                    const token = result.data.data.sellerLogin;
+                    dispatch(setAuthToken(token));
+                } else {
+                    dispatch(loginFailure());
+                }
+            }).catch(err => {
+                dispatch(loginPending(false));
+                console.log(err);
             })
     }
 };

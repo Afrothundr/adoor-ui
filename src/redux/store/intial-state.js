@@ -1,5 +1,7 @@
 export default {
     auth: {
-        token: null
+        token: null,
+        loginPending: false,
+        loginFailed: false
     }
   };

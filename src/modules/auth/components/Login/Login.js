@@ -58,11 +58,11 @@ export class Login extends React.Component {
     handleLogin = (email, password) => {
         this.setState({ loadingLogin: true })
         this.props.login(email, password);
-        
+
         setTimeout(() => {
             console.log(this.props);
         }, 1000);
-        this.setState({loggedIn: true});
+        this.setState({ loggedIn: true });
     }
 
     render() {
@@ -72,7 +72,7 @@ export class Login extends React.Component {
         };
         if (this.props.token) {
             return <Redirect to='/dashboard' />
-          }
+        }
         return (
             <div className="login">
                 <img className="login-logo" alt="" src={logo}></img>
@@ -91,8 +91,7 @@ export class Login extends React.Component {
                             <SignUpForm hidden={!this.state.showLoginForm} />
                     }
                 </div>
-                <p>{this.props.token}</p>
-
+                <p hidden={!this.props.isLoading}>loading</p>
             </div>
         )
     }
@@ -100,20 +99,21 @@ export class Login extends React.Component {
 
 const mapStateToProps = state => {
     return {
-      token : state.authReducer.token
+        token: state.authReducer.token,
+        isLoading: state.authReducer.loginPending
     }
-  }
-  const mapDispatchToProps = dispatch => {
+}
+const mapDispatchToProps = dispatch => {
     return {
         login: (email, password) => dispatch(login(email, password))
     }
-  }
+}
 
 Login.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles) (connect(
+export default withStyles(styles)(connect(
     mapStateToProps,
     mapDispatchToProps
 )(Login));
