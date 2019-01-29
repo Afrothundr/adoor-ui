@@ -9,7 +9,8 @@ import SignUpForm from '../Sign-Up-Form/Sign-Up-Form';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
 import { login } from '../../redux/actions/auth.actions';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
     button: {
@@ -87,11 +88,11 @@ export class Login extends React.Component {
                 <div>
                     {
                         this.state.showLoginForm ?
-                            <LoginForm hidden={this.state.showLoginForm} handleLogin={this.handleLogin} /> :
+                            <LoginForm hidden={this.state.showLoginForm} handleLogin={this.handleLogin} showButton={!this.props.isLoading} /> :
                             <SignUpForm hidden={!this.state.showLoginForm} />
                     }
                 </div>
-                <p hidden={!this.props.isLoading}>loading</p>
+                {this.props.isLoading && <CircularProgress className={classes.progress} />}
             </div>
         )
     }

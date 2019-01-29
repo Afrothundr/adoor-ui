@@ -52,28 +52,31 @@ class LoginForm extends React.Component {
         const { email, password } = this.state;
         return (
             <form className={classes.container} noValidate autoComplete="off" onSubmit={this.loginFormSubmit}>
-            <TextField
-                label="email"
-                name="email"
-                className={classes.textField}
-                value={email}
-                onChange={this.onChange}
-                margin="normal"
-                variant="filled"
-            />
-            <TextField
-                label="password"
-                name="password"
-                className={classes.textField}
-                type="password"
-                value={password}
-                onChange={this.onChange}
-                margin="normal"
-                variant="filled"
-            />
-            <Button type="submit" color="primary" variant="contained" className={classes.button} >
-                submit
-            </Button>
+                <TextField
+                    label="email"
+                    name="email"
+                    className={classes.textField}
+                    value={email}
+                    onChange={this.onChange}
+                    margin="normal"
+                    variant="filled"
+                />
+                <TextField
+                    label="password"
+                    name="password"
+                    className={classes.textField}
+                    type="password"
+                    value={password}
+                    onChange={this.onChange}
+                    margin="normal"
+                    variant="filled"
+                />
+                {
+                    this.props.showButton &&
+                    <Button type="submit" color="primary" variant="contained" className={classes.button} >
+                            submit
+                    </Button>
+                }
             </form>
         );
     };
