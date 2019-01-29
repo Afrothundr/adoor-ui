@@ -37,14 +37,16 @@ export const login = (email, password) => {
         return adoorApi.post('', { query: LOGIN })
             .then(result => {
                 dispatch(loginPending(false));
-                if (!result.data.error) {
+                if (!result.data.errors) {
                     const token = result.data.data.sellerLogin;
                     dispatch(setAuthToken(token));
                 } else {
+                    dispatch(loginPending(false));
                     dispatch(loginFailure());
                 }
             }).catch(err => {
                 dispatch(loginPending(false));
+                dispatch(loginFailure());
                 console.log(err);
             })
     }

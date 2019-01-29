@@ -93,6 +93,11 @@ export class Login extends React.Component {
                     }
                 </div>
                 {this.props.isLoading && <CircularProgress className={classes.progress} />}
+                {(this.props.loginFailed && !this.props.isLoading) && 
+                <div>
+                    <h4>Login Failed!</h4>
+                </div>
+                }
             </div>
         )
     }
@@ -101,7 +106,8 @@ export class Login extends React.Component {
 const mapStateToProps = state => {
     return {
         token: state.authReducer.token,
-        isLoading: state.authReducer.loginPending
+        isLoading: state.authReducer.loginPending,
+        loginFailed: state.authReducer.loginFailed
     }
 }
 const mapDispatchToProps = dispatch => {
