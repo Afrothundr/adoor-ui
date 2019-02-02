@@ -1,16 +1,15 @@
 
-import './Login.scss';
-import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import logo from '../../../../images/logo.png';
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import logo from '../../../../images/logo.png';
+import { login, clearAuthErrors } from '../../redux/actions/auth.actions';
 import LoginForm from '../Login-Form/Login-Form';
 import SignUpForm from '../Sign-Up-Form/Sign-Up-Form';
-import Button from '@material-ui/core/Button';
-import { connect } from 'react-redux'
-import { login } from '../../redux/actions/auth.actions';
-import { Redirect } from 'react-router-dom';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import './Login.scss';
 
 const styles = theme => ({
     button: {
@@ -57,13 +56,7 @@ export class Login extends React.Component {
     }
 
     handleLogin = (email, password) => {
-        this.setState({ loadingLogin: true })
         this.props.login(email, password);
-
-        setTimeout(() => {
-            console.log(this.props);
-        }, 1000);
-        this.setState({ loggedIn: true });
     }
 
     render() {
@@ -88,14 +81,19 @@ export class Login extends React.Component {
                 <div>
                     {
                         this.state.showLoginForm ?
-                            <LoginForm hidden={this.state.showLoginForm} handleLogin={this.handleLogin} showButton={!this.props.isLoading} /> :
+                            <LoginForm 
+                                hidden={this.state.showLoginForm}
+                                handleLogin={this.handleLogin}
+                                loginFailed={this.props.loginFailed}
+                                isLoading={this.props.isLoading}
+                                clearAuthErrors={this.props.clearAuthErrors} /> :
                             <SignUpForm hidden={!this.state.showLoginForm} />
                     }
                 </div>
-                {this.props.isLoading && <CircularProgress className={classes.progress} />}
                 {(this.props.loginFailed && !this.props.isLoading) && 
-                <div>
+                <div className="login-failure-message">
                     <h4>Login Failed!</h4>
+                    <p>Username or password is incorrect</p>
                 </div>
                 }
             </div>
@@ -112,7 +110,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        login: (email, password) => dispatch(login(email, password))
+        login: (email, password) => dispatch(login(email, password)),
+        clearAuthErrors: () => dispatch(clearAuthErrors())
     }
 }
 

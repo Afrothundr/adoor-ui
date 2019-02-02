@@ -1,10 +1,9 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Redirect, Route } from 'react-router-dom';
 
-const AuthenticatedRoute = ({ component: Component, ...rest }) => (
+export const AuthenticatedRoute = ({ component: Component, authed, ...rest }) => (
     <Route {...rest} render={(props) => (
-      props.token
+      authed
         ? <Component {...props} />
         : <Redirect to={{
             pathname: '/login',
@@ -12,11 +11,3 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => (
           }} />
     )} />
   )
-
-  const mapStateToProps = function(state) {
-    return {
-      token: state.authReducer.token
-    }
-  }
-  
-  export default connect(mapStateToProps)(AuthenticatedRoute);

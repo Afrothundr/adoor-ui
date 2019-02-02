@@ -1,3 +1,4 @@
+@import "../../../../theme.scss";
 .login {
     height: 100%;
     width: 100%;
@@ -9,6 +10,16 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    &-failure-message {
+        margin: 2vw;
+        text-align: center;
+        width: 30%;
+        background-color: #ffbcaf;
+        h4{
+            color: $primary;
+        }
+
+    }
 }
 
 .login-logo {
@@ -16,5 +27,5 @@
 }
 
 .active {
-    border-bottom: 3px solid pink;
+    border-bottom: 3px solid $primary-light;
 }

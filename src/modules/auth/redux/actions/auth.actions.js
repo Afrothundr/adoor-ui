@@ -1,4 +1,4 @@
-import { LOG_OUT, SET_AUTH_TOKEN, LOG_IN_FAILURE, LOG_IN_PENDING } from './auth.action.types';
+import { LOG_OUT, SET_AUTH_TOKEN, LOG_IN_FAILURE, LOG_IN_PENDING, CLEAR_AUTH_ERRORS } from './auth.action.types';
 import axios from 'axios';
 import { environment } from '../../../../environments';
 
@@ -17,6 +17,10 @@ export const loginFailure = () => ({
 
 export const logOut = () => ({
     type: LOG_OUT
+});
+
+export const clearAuthErrors = () => ({
+    type: CLEAR_AUTH_ERRORS
 });
 
 export const login = (email, password) => {
