@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { logOut } from '../../../auth/redux/actions/auth.actions';
+import Nav from '../Nav/Nav';
 
 const styles = theme => ({
 });
@@ -21,7 +22,7 @@ class Dashboard extends React.Component {
     render() {
         return(
             <div>
-                <h1>Hello World</h1>
+                <Nav />
                 <button onClick={this.handleLogOut}>log out</button>
             </div>
         )
