@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { AuthenticatedRoute } from './modules/auth/protected-route';
 
 
+
 const theme = createMuiTheme({
   palette: {
     primary: {

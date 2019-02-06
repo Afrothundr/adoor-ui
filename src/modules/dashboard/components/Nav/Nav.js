@@ -20,6 +20,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import logo from '../../../../images/logo.png';
+import { connect } from 'react-redux';
+import { logOut } from '../../../auth/redux/actions/auth.actions';
 
 const drawerWidth = 240;
 
@@ -104,6 +106,10 @@ class Nav extends React.Component {
         this.setState({ open: false });
     };
 
+    handleLogOut = () => {
+        this.props.logOut()
+    }
+
     render() {
         const { classes, theme } = this.props;
 
@@ -172,6 +178,10 @@ class Nav extends React.Component {
                                 <ListItemText primary={text} />
                             </ListItem>
                         ))}
+                        <ListItem button onClick={this.handleLogOut}>
+                        <ListItemIcon> <InboxIcon /></ListItemIcon>
+                            <ListItemText primary='log out'/>
+                        </ListItem>
                     </List>
                 </Drawer>
                 <main className={classes.content}>
@@ -183,9 +193,25 @@ class Nav extends React.Component {
     }
 }
 
+
+const mapStateToProps = state => {
+    return {
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        logOut: () => dispatch(logOut())
+    }
+}
+
+
 Nav.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Nav);
+export default withStyles(styles, { withTheme: true })(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Nav));
