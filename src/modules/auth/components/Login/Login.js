@@ -6,7 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import logo from '../../../../images/logo.png';
-import { login, clearAuthErrors } from '../../redux/actions/auth.actions';
+import { login, clearAuthErrors, checkEmail } from '../../redux/actions/auth.actions';
 import LoginForm from '../Login-Form/Login-Form';
 import SignUpForm from '../Sign-Up-Form/Sign-Up-Form';
 import './Login.scss';
@@ -59,6 +59,10 @@ export class Login extends React.Component {
         this.props.login(email, password);
     }
 
+    handleCheckEmail = email => {
+        this.props.checkEmail(email);
+    }
+
     render() {
         const { classes } = this.props;
         const activeStyle = {
@@ -87,7 +91,11 @@ export class Login extends React.Component {
                                 loginFailed={this.props.loginFailed}
                                 isLoading={this.props.isLoading}
                                 clearAuthErrors={this.props.clearAuthErrors} /> :
-                            <SignUpForm hidden={!this.state.showLoginForm} />
+                            <SignUpForm 
+                                hidden={!this.state.showLoginForm}
+                                checkEmail={this.handleCheckEmail}
+                                isEmailAvailable={this.props.isEmailAvailable}
+                             />
                     }
                 </div>
                 {(this.props.loginFailed && !this.props.isLoading) && 
@@ -105,13 +113,15 @@ const mapStateToProps = state => {
     return {
         token: state.authReducer.token,
         isLoading: state.authReducer.loginPending,
-        loginFailed: state.authReducer.loginFailed
+        loginFailed: state.authReducer.loginFailed,
+        isEmailAvailable: state.authReducer.isEmailAvailable
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
         login: (email, password) => dispatch(login(email, password)),
-        clearAuthErrors: () => dispatch(clearAuthErrors())
+        clearAuthErrors: () => dispatch(clearAuthErrors()),
+        checkEmail: (email) => dispatch(checkEmail(email))
     }
 }
 

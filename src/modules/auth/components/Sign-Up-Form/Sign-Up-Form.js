@@ -28,66 +28,97 @@ const styles = theme => ({
     },
 });
 
-const SignUpForm = (props) => {
-    const { classes } = props;
-    return (
-        <form className={classes.container} noValidate autoComplete="off">
-            <div>
-                <TextField
-                    label="first name"
-                    className={classes.textField}
-                    margin="normal"
-                    variant="filled"
-                />
-                <TextField
-                    label="last name"
-                    className={classes.textField}
 
-                    margin="normal"
-                    variant="filled"
-                />
-            </div>
-            <div>
-                <TextField
-                    label="email"
-                    className={classes.textField}
+class SignUpForm extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            firstName: '',
+            email: ''
+        }
+    }
+    handleEmailChange = () => {
 
-                    margin="normal"
-                    variant="filled"
-                    type="email"
-                />
-                <TextField
-                    label="phone number"
-                    className={classes.textField}
+    }
 
-                    margin="normal"
-                    variant="filled"
-                    type="tel"
-                />
-            </div>
-            <div>
-                <TextField
-                    label="password"
-                    className={classes.textField}
-                    type="password"
+    onChange = e => {
+        this.setState({ [e.target.name]: e.target.value });
+        if (this.state.email) {
+            setTimeout(() => {
+                this.props.checkEmail(this.state.email);
+            }, 500)
+        }
+    }
+    render() {
+        const { classes } = this.props;
+        const formValues = this.state;
+        return (
+            <form className={classes.container} autoComplete="off">
+                <div>
+                    <TextField
+                        label="first name"
+                        className={classes.textField}
+                        margin="normal"
+                        variant="filled"
+                        name="firstName"
+                        value={formValues.firstName}
+                        onChange={this.onChange}
+                    />
+                    <TextField
+                        label="last name"
+                        className={classes.textField}
 
-                    margin="normal"
-                    variant="filled"
-                />
-                <TextField
-                    label="confirm password"
-                    className={classes.textField}
-                    type="password"
+                        margin="normal"
+                        variant="filled"
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="email"
+                        name="email"
+                        autoComplete="off"
+                        className={classes.textField}
+                        error={!this.props.isEmailAvailable}
+                        helperText={!this.props.isEmailAvailable && 'this email is alread registered'}
+                        margin="normal"
+                        variant="filled"
+                        type="email"
+                        value={formValues.email}
+                        onChange={this.onChange}
+                    />
+                    <TextField
+                        label="phone number"
+                        className={classes.textField}
 
-                    margin="normal"
-                    variant="filled"
-                />
-            </div>
-            <Button color="primary" variant="contained" className={classes.button}>
-                submit
-        </Button>
-        </form>
-    );
+                        margin="normal"
+                        variant="filled"
+                        type="tel"
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="password"
+                        className={classes.textField}
+                        type="password"
+
+                        margin="normal"
+                        variant="filled"
+                    />
+                    <TextField
+                        label="confirm password"
+                        className={classes.textField}
+                        type="password"
+
+                        margin="normal"
+                        variant="filled"
+                    />
+                </div>
+                <Button color="primary" variant="contained" className={classes.button}>
+                    submit
+            </Button>
+            </form>
+        );
+    }
 }
 
 SignUpForm.propTypes = {

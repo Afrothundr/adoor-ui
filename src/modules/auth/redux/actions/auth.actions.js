@@ -1,9 +1,9 @@
-import { LOG_OUT, SET_AUTH_TOKEN, LOG_IN_FAILURE, LOG_IN_PENDING, CLEAR_AUTH_ERRORS } from './auth.action.types';
+import { LOG_OUT, SET_AUTH_TOKEN, LOG_IN_FAILURE, LOG_IN_PENDING, CLEAR_AUTH_ERRORS, IS_EMAIL_AVAILABLE } from './auth.action.types';
 import axios from 'axios';
 import { environment } from '../../../../environments';
 
 export const setAuthToken = token => {
-    return {type: SET_AUTH_TOKEN, token}
+    return { type: SET_AUTH_TOKEN, token }
 }
 
 export const loginPending = isPending => ({
@@ -23,9 +23,14 @@ export const clearAuthErrors = () => ({
     type: CLEAR_AUTH_ERRORS
 });
 
+export const isEmailAvailable = availibility => ({
+    type: IS_EMAIL_AVAILABLE,
+    availibility
+});
+
 export const login = (email, password) => {
     const adoorApi = axios.create({
-        baseURL: 'https://adoor-api.herokuapp.com/api',
+        baseURL: environment.API_BASE_URL,
     });
     const LOGIN = `
         mutation {
@@ -55,3 +60,21 @@ export const login = (email, password) => {
             })
     }
 };
+
+export const checkEmail = email => {
+    const adoorApi = axios.create({
+        baseURL: environment.API_BASE_URL
+    });
+    const CHECK_EMAIL = `
+    {
+        isSellerEmailAvailable(email: "${email}")
+    }
+    `;
+    return dispatch => {
+        return adoorApi.post('', { query: CHECK_EMAIL}).then(result => {
+            dispatch(isEmailAvailable(result.data.data.isSellerEmailAvailable));
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
