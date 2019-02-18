@@ -69,13 +69,13 @@ class SignUpForm extends React.Component {
     }
 
     onChange = e => {
-        this.setState({ 
+        this.setState({
             [e.target.name]: e.target.value,
             isDirty: {
                 ...this.state.isDirty,
                 [e.target.name]: true
             }
-          }, this.validateField(e.target.name, e.target.value));
+        }, this.validateField(e.target.name, e.target.value));
         if (this.state.email) {
             setTimeout(() => {
                 this.props.checkEmail(this.state.email);
@@ -140,19 +140,27 @@ class SignUpForm extends React.Component {
 
     getEmailErrorMessage() {
         if (!this.props.isEmailAvailable) {
-            return 'this email is alread registered'
+            return 'this email is alread registered';
         } else if (!this.state.validators.emailValid) {
             return this.state.formErrors.email;
         } else {
-            return ''
+            return '';
         }
+    }
+
+    signUpFormSubmit = event => {
+        event.preventDefault();
+        // for number format stripping
+        // var numberPattern = /\d+/g;
+        // value = value.match(numberPattern).join([]);
+        console.log(this.state);
     }
 
     render() {
         const { classes } = this.props;
         const formValues = this.state;
         return (
-            <form className={classes.container} autoComplete="off">
+            <form className={classes.container} autoComplete="off" onSubmit={this.signUpFormSubmit}>
                 <div>
                     <TextField
                         label="first name"
@@ -162,6 +170,8 @@ class SignUpForm extends React.Component {
                         name="firstName"
                         value={formValues.firstName}
                         onChange={this.onChange}
+                        helperText={this.state.formErrors.firstName}
+                        error={!this.state.validators.firstNameVaild && this.state.isDirty.firstName}
                     />
                     <TextField
                         label="last name"
@@ -171,6 +181,8 @@ class SignUpForm extends React.Component {
                         onChange={this.onChange}
                         margin="normal"
                         variant="filled"
+                        helperText={this.state.formErrors.lastName}
+                        error={!this.state.validators.lastNameValid && this.state.isDirty.lastName}
                     />
                 </div>
                 <div>
@@ -214,6 +226,8 @@ class SignUpForm extends React.Component {
                         variant="filled"
                         value={formValues.password}
                         onChange={this.onChange}
+                        helperText={this.state.formErrors.password}
+                        error={!this.state.validators.passwordValid && this.state.isDirty.password}
                     />
                     <TextField
                         label="confirm password"
@@ -224,9 +238,11 @@ class SignUpForm extends React.Component {
                         variant="filled"
                         value={formValues.confirmPassword}
                         onChange={this.onChange}
+                        helperText={this.state.formErrors.confirmPassword}
+                        error={!this.state.validators.confirmPasswordValid && this.state.isDirty.confirmPassword}
                     />
                 </div>
-                <Button color="primary" variant="contained" className={classes.button} disabled={!this.state.formValid}>
+                <Button type="submit" color="primary" variant="contained" className={classes.button} disabled={!this.state.formValid}>
                     let's do this!
             </Button>
             </form>
