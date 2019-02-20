@@ -2,6 +2,9 @@ export default {
     auth: {
         token: null,
         loginPending: false,
-        loginFailed: false
+        signUpPending: false,
+        signUpFailed: false,
+        loginFailed: false,
+        isEmailAvailable: true
     }
   };
