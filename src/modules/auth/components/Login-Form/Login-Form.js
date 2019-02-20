@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { clearAuthErrors } from '../../redux/actions/auth.actions';
+
 
 
 const styles = theme => ({

@@ -6,7 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import logo from '../../../../images/logo.png';
-import { login, clearAuthErrors, checkEmail } from '../../redux/actions/auth.actions';
+import { login, clearAuthErrors, checkEmail, signUp } from '../../redux/actions/auth.actions';
 import LoginForm from '../Login-Form/Login-Form';
 import SignUpForm from '../Sign-Up-Form/Sign-Up-Form';
 import './Login.scss';
@@ -63,6 +63,10 @@ export class Login extends React.Component {
         this.props.checkEmail(email);
     }
 
+    handleSignUp = seller => {
+        this.props.signUp(seller);
+    }
+
     render() {
         const { classes } = this.props;
         const activeStyle = {
@@ -95,6 +99,9 @@ export class Login extends React.Component {
                                 hidden={!this.state.showLoginForm}
                                 checkEmail={this.handleCheckEmail}
                                 isEmailAvailable={this.props.isEmailAvailable}
+                                isLoading={this.props.isSignUpLoading}
+                                signUpFailed={this.props.signUpFailed}
+                                handleSignUp={this.handleSignUp}
                              />
                     }
                 </div>
@@ -110,18 +117,23 @@ export class Login extends React.Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state.authReducer);
     return {
         token: state.authReducer.token,
         isLoading: state.authReducer.loginPending,
+        isSignUpLoading: state.authReducer.signUpPending,
+        signUpFailed: state.authReducer.signUpFailed,
         loginFailed: state.authReducer.loginFailed,
         isEmailAvailable: state.authReducer.isEmailAvailable
     }
+    
 }
 const mapDispatchToProps = dispatch => {
     return {
         login: (email, password) => dispatch(login(email, password)),
         clearAuthErrors: () => dispatch(clearAuthErrors()),
-        checkEmail: (email) => dispatch(checkEmail(email))
+        checkEmail: email => dispatch(checkEmail(email)),
+        signUp: seller => dispatch(signUp(seller))
     }
 }
 

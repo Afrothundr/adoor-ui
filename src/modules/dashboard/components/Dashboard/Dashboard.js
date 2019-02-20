@@ -160,27 +160,27 @@ class Dashboard extends React.Component {
                     <Divider />
                     <List id="sidebar">
                         <ListItem button>
-                            <ListItemIcon> <i class="fas fa-user-circle fa-2x"></i></ListItemIcon>
+                            <ListItemIcon><div><i className="fas fa-user-circle fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='profile' />
                         </ListItem>
                         <ListItem button>
-                            <ListItemIcon> <i class="fas fa-plus fa-2x"></i></ListItemIcon>
+                            <ListItemIcon> <i className="fas fa-plus fa-2x"></i></ListItemIcon>
                             <ListItemText primary='add listing' />
                         </ListItem>
                         <ListItem button>
-                            <ListItemIcon> <i class="fas fa-poll fa-2x"></i></ListItemIcon>
+                            <ListItemIcon> <i className="fas fa-poll fa-2x"></i></ListItemIcon>
                             <ListItemText primary='analytics' />
                         </ListItem>
                         <ListItem button>
-                            <ListItemIcon> <i class="fas fa-briefcase fa-2x"></i></ListItemIcon>
+                            <ListItemIcon> <i className="fas fa-briefcase fa-2x"></i></ListItemIcon>
                             <ListItemText primary='manage listings' />
                         </ListItem>
                         <ListItem button>
-                            <ListItemIcon> <i class="fas fa-comments fa-2x"></i></ListItemIcon>
+                            <ListItemIcon> <i className="fas fa-comments fa-2x"></i></ListItemIcon>
                             <ListItemText primary='messages' />
                         </ListItem>
                         <ListItem button onClick={this.handleLogOut}>
-                            <ListItemIcon> <i class="fas fa-sign-out-alt fa-2x"></i></ListItemIcon>
+                            <ListItemIcon> <i className="fas fa-sign-out-alt fa-2x"></i></ListItemIcon>
                             <ListItemText primary='log out' />
                         </ListItem>
                     </List>

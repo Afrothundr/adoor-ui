@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import InputMask from 'react-input-mask';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import  CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
     button: {
@@ -26,6 +27,9 @@ const styles = theme => ({
     },
     menu: {
         width: 200,
+    },
+    buttonProgress: {
+        marginTop: -45,
     },
 });
 
@@ -76,7 +80,7 @@ class SignUpForm extends React.Component {
                 [e.target.name]: true
             }
         }, this.validateField(e.target.name, e.target.value));
-        if (this.state.email) {
+        if (e.target.name === 'email') {
             setTimeout(() => {
                 this.props.checkEmail(this.state.email);
             }, 500)
@@ -151,9 +155,16 @@ class SignUpForm extends React.Component {
     signUpFormSubmit = event => {
         event.preventDefault();
         // for number format stripping
-        // var numberPattern = /\d+/g;
-        // value = value.match(numberPattern).join([]);
-        console.log(this.state);
+        const numberPattern = /\d+/g;
+        const seller = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber.match(numberPattern).join([]),
+            password: this.state.password
+        }
+        this.props.handleSignUp(seller);
+        console.log(seller);
     }
 
     render() {
@@ -242,9 +253,10 @@ class SignUpForm extends React.Component {
                         error={!this.state.validators.confirmPasswordValid && this.state.isDirty.confirmPassword}
                     />
                 </div>
-                <Button type="submit" color="primary" variant="contained" className={classes.button} disabled={!this.state.formValid}>
+                <Button type="submit" color="primary" variant="contained" className={classes.button} disabled={!this.state.formValid || this.props.isLoading}>
                     let's do this!
-            </Button>
+                </Button>
+                {this.props.isLoading && <CircularProgress className={classes.buttonProgress} />}
             </form>
         );
     }
