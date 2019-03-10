@@ -117,7 +117,6 @@ export class Login extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.authReducer);
     return {
         token: state.authReducer.token,
         isLoading: state.authReducer.loginPending,

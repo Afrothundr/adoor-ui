@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import logo from '../../../../images/logo.png';
 import { connect } from 'react-redux';
 import { logOut } from '../../../auth/redux/actions/auth.actions';
+import { loadProfile } from '../../redux/actions/dashboard.actions';
 import './Dashboard.scss';
 
 const drawerWidth = 240;
@@ -91,7 +92,11 @@ class Dashboard extends React.Component {
         this.state = {
             open: false,
         };
-
+    }
+    componentWillMount() {
+        if(!this.props.profile) {
+            this.props.loadProfile();
+        }
     }
 
     handleDrawerOpen = () => {
@@ -108,7 +113,6 @@ class Dashboard extends React.Component {
 
     render() {
         const { classes, theme } = this.props;
-
         return (
             <div className={classes.root}>
                 <CssBaseline />
@@ -132,8 +136,8 @@ class Dashboard extends React.Component {
                         <div className='header-profile-container'>
                             <img className="header-logo" alt="" src={logo}></img>
                             <div className='profile-container'>
-                                <img src="https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"></img>
-                                <h4>Whitney</h4>
+                                <img alt="profile-pic" src="https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"></img>
+                                <h4>{this.props.profile.firstName}</h4>
                             </div>
                         </div>
                     </Toolbar>
@@ -196,10 +200,14 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => {
     return {
+        profilePending: state.dashboardReducer.profilePending,
+        profileLoadFailed: state.dashboardReducer.profileLoadFailed,
+        profile: state.dashboardReducer.profile
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
+        loadProfile: () => dispatch(loadProfile()),
         logOut: () => dispatch(logOut())
     }
 }

@@ -12,30 +12,12 @@ export const loginPending = isPending => ({
     isPending
 });
 
-export const signUpPending = isPending => ({
-    type: actions.SIGN_UP_PENDING,
-    isPending
-});
-
-export const signUpFailure = () => ({
-    type: actions.SIGN_UP_FAILURE
-});
-
 export const loginFailure = () => ({
     type: actions.LOG_IN_FAILURE
 });
 
 export const logOut = () => ({
     type: actions.LOG_OUT
-});
-
-export const clearAuthErrors = () => ({
-    type: actions.CLEAR_AUTH_ERRORS
-});
-
-export const isEmailAvailable = availibility => ({
-    type: actions.IS_EMAIL_AVAILABLE,
-    availibility
 });
 
 export const login = (email, password) => {
@@ -71,23 +53,15 @@ export const login = (email, password) => {
     }
 };
 
-export const checkEmail = email => {
-    const adoorApi = axios.create({
-        baseURL: environment.API_BASE_URL
-    });
-    const CHECK_EMAIL = `
-    {
-        isSellerEmailAvailable(email: "${email}")
-    }
-    `;
-    return dispatch => {
-        return adoorApi.post('', { query: CHECK_EMAIL }).then(result => {
-            dispatch(isEmailAvailable(result.data.data.isSellerEmailAvailable));
-        }).catch(err => {
-            console.log(err);
-        });
-    }
-}
+export const signUpPending = isPending => ({
+    type: actions.SIGN_UP_PENDING,
+    isPending
+});
+
+export const signUpFailure = () => ({
+    type: actions.SIGN_UP_FAILURE
+});
+
 
 export const signUp = seller => {
     const adoorApi = axios.create({
@@ -125,3 +99,33 @@ export const signUp = seller => {
         }
     }
 }
+
+export const clearAuthErrors = () => ({
+    type: actions.CLEAR_AUTH_ERRORS
+});
+
+export const isEmailAvailable = availibility => ({
+    type: actions.IS_EMAIL_AVAILABLE,
+    availibility
+});
+
+
+
+export const checkEmail = email => {
+    const adoorApi = axios.create({
+        baseURL: environment.API_BASE_URL
+    });
+    const CHECK_EMAIL = `
+    {
+        isSellerEmailAvailable(email: "${email}")
+    }
+    `;
+    return dispatch => {
+        return adoorApi.post('', { query: CHECK_EMAIL }).then(result => {
+            dispatch(isEmailAvailable(result.data.data.isSellerEmailAvailable));
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+

@@ -6,5 +6,18 @@ export default {
         signUpFailed: false,
         loginFailed: false,
         isEmailAvailable: true
+    },
+    dashboard: {
+        profilePending: false,
+        profileLoadFailed: false,
+        profile: {
+            firstName: null,
+            lastName: null,
+            phoneNumber: null,
+            bio: null,
+            email: null,
+            company: null,
+            listings: []
+        }
     }
   };
