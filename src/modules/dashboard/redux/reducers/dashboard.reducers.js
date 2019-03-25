@@ -9,6 +9,8 @@ export default function dashboardReducer(state = intialState.dashboard, action) 
             return {...state, profileLoadFailed: true}
         case actionType.SET_PROFILE:
             return {...state, profile: action.profile }
+        case actionType.CLEAR_PROFILE:
+            return intialState.dashboard
         default:
             return state;
     }

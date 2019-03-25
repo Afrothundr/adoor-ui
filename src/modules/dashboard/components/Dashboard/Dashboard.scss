@@ -32,9 +32,25 @@
     flex-direction: column;
     justify-content: space-evenly;
     height: 100%;
+    div {
+        height: 16.5%;
+        display: flex;
+        align-items: center;
+    }
+    a {
+        height: 16.5%;
+    }
 }
 
 #header-container {
     box-shadow: none;
     border-bottom: solid 2px lightgray;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding-top: 64px;
 }

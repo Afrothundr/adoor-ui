@@ -1,4 +1,3 @@
-import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -15,10 +14,13 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import logo from '../../../../images/logo.png';
+import React from 'react';
 import { connect } from 'react-redux';
+import { Route, Link } from 'react-router-dom';
+import logo from '../../../../images/logo.png';
 import { logOut } from '../../../auth/redux/actions/auth.actions';
-import { loadProfile } from '../../redux/actions/dashboard.actions';
+import { clearProfile, loadProfile } from '../../redux/actions/dashboard.actions';
+import Profile from '../Profile/Profile';
 import './Dashboard.scss';
 
 const drawerWidth = 240;
@@ -94,7 +96,7 @@ class Dashboard extends React.Component {
         };
     }
     componentWillMount() {
-        if(!this.props.profile) {
+        if(!this.props.profile.email) {
             this.props.loadProfile();
         }
     }
@@ -108,6 +110,7 @@ class Dashboard extends React.Component {
     };
 
     handleLogOut = () => {
+        this.props.clearProfile()
         this.props.logOut()
     }
 
@@ -142,9 +145,9 @@ class Dashboard extends React.Component {
                         </div>
                     </Toolbar>
                 </AppBar>
-                <Drawer className="sidebar"
+                <Drawer
                     variant="permanent"
-                    className={classNames(classes.drawer, {
+                    className={classNames(classes.drawer, 'sidebar', {
                         [classes.drawerOpen]: this.state.open,
                         [classes.drawerClose]: !this.state.open,
                     })}
@@ -163,35 +166,34 @@ class Dashboard extends React.Component {
                     </div>
                     <Divider />
                     <List id="sidebar">
-                        <ListItem button>
+                        <ListItem button component={Link} to="/dashboard/profile">
                             <ListItemIcon><div><i className="fas fa-user-circle fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='profile' />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemIcon> <i className="fas fa-plus fa-2x"></i></ListItemIcon>
+                        <ListItem button component={Link} to="/dashboard/add-listing">
+                            <ListItemIcon><div><i className="fas fa-plus fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='add listing' />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemIcon> <i className="fas fa-poll fa-2x"></i></ListItemIcon>
+                        <ListItem button component={Link} to="/dashboard/analytics">
+                            <ListItemIcon><div><i className="fas fa-poll fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='analytics' />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemIcon> <i className="fas fa-briefcase fa-2x"></i></ListItemIcon>
+                        <ListItem button component={Link} to="/dashboard/manage">
+                            <ListItemIcon><div><i className="fas fa-briefcase fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='manage listings' />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemIcon> <i className="fas fa-comments fa-2x"></i></ListItemIcon>
+                        <ListItem button component={Link} to="/dashboard/messages">
+                            <ListItemIcon><div><i className="fas fa-comments fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='messages' />
                         </ListItem>
                         <ListItem button onClick={this.handleLogOut}>
-                            <ListItemIcon> <i className="fas fa-sign-out-alt fa-2x"></i></ListItemIcon>
+                            <ListItemIcon><div><i className="fas fa-sign-out-alt fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='log out' />
                         </ListItem>
                     </List>
                 </Drawer>
                 <main className={classes.content}>
-                    <div className={classes.toolbar} />
-
+                    <Route path="/dashboard/profile"  component={Profile} />
                 </main>
             </div>
         );
@@ -208,7 +210,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         loadProfile: () => dispatch(loadProfile()),
-        logOut: () => dispatch(logOut())
+        logOut: () => dispatch(logOut()),
+        clearProfile: () => dispatch(clearProfile())
     }
 }
 

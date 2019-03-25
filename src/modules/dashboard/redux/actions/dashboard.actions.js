@@ -59,4 +59,8 @@ export const loadProfile = () => {
             dispatch(profileLoadFailure());
         }
     }
-}
+};
+
+export const clearProfile = () => ({
+    type: actions.CLEAR_PROFILE
+});

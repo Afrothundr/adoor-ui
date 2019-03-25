@@ -17,6 +17,8 @@ export default {
             bio: null,
             email: null,
             company: null,
+            profilePicture: null,
+            title: null,
             listings: []
         }
     }
