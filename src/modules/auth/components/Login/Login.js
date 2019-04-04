@@ -73,7 +73,7 @@ export class Login extends React.Component {
             borderBottom: '3px solid #C9283E'
         };
         if (this.props.token) {
-            return <Redirect to='/dashboard' />
+            return <Redirect to='/dashboard/profile' />
         }
         return (
             <div className="login">

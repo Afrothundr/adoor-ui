@@ -139,7 +139,7 @@ class Dashboard extends React.Component {
                         <div className='header-profile-container'>
                             <img className="header-logo" alt="" src={logo}></img>
                             <div className='profile-container'>
-                                <img alt="profile-pic" src="https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"></img>
+                                <img alt="profile-pic" src={this.props.profile.profilePicture || "https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"}></img>
                                 <h4>{this.props.profile.firstName}</h4>
                             </div>
                         </div>

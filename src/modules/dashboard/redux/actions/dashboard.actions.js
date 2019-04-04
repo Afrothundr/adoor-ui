@@ -31,6 +31,8 @@ export const loadProfile = () => {
                 bio
                 email
                 company
+                profilePicture
+                title
                 listings {
                     id
                 }
@@ -60,6 +62,48 @@ export const loadProfile = () => {
         }
     }
 };
+
+export const uploadProfile = profile => {
+    const adoorApi = axios.create({
+        baseURL: environment.API_BASE_URL
+    });
+
+    const UPDATE_SELLER = `
+    mutation {
+        sellerLogin(
+            firstName: "${profile.firstName}",
+            lastName: "${profile.lastName}",
+            phoneNumber: "${profile.phoneNumber}",
+            bio: "${profile.bio}",
+            email: "${profile.email}",
+            company: "${profile.company}",
+            profilePicture: "${profile.profilePicture}",
+            title: "${profile.title}",
+            apiKey: "${environment.API_KEY}"
+        ) {
+            firstName
+            lastName
+            phoneNumber
+            bio
+            email
+            company
+            profilePicture
+            title
+            listings {
+                id
+            }
+        }
+    }`;
+
+    return dispatch => {
+        return adoorApi.post('', {query: UPDATE_SELLER})
+            .then(result => {
+                if (!result.data.errors) {
+                    dispatch(setProfile(result.data.data.sellerLogin))
+                }
+            })
+    }
+}
 
 export const clearProfile = () => ({
     type: actions.CLEAR_PROFILE

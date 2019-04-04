@@ -1,0 +1,34 @@
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    h1 {
+        margin-left: 25px
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    &-rows {
+        margin: 10px 0;
+        width: 100%;
+        > div{
+            margin: 0 10px;
+        }
+    }
+    &-actions {
+        display: flex;
+        flex-direction: row;
+        align-self: flex-end;
+    }
+
+    .full-length {
+        width: 100%;
+        > div{
+            width: 100%;
+        }
+    }
+
+}

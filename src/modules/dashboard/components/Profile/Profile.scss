@@ -1,15 +1,37 @@
 section {
-    div {
+    max-width: 66%;
+    min-width: 250px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, .2);
+    padding: 30px 25px;
+    .profile-card {
         display: flex;
         flex-direction: row;
+        justify-content: center;
         aside {
+            padding: 0 20px;
             img {
                 width: 100px;
                 border-radius: 50%;
             }
         }
         article {
-
+            padding: 0 20px;
+            address {
+                display: flex;
+                flex-direction: row;
+                h5 {
+                    margin: 5px 12px 0 0;
+                }
+            }
+            p {
+                padding-right: 10px;
+            }
         }
+    }
+    .lowerCaseButton {
+        float: right;
+        text-transform: none;
     }
 }
