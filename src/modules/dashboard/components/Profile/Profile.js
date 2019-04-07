@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import ProfileForm from './Profile-Form/Profile-Form';
 import './Profile.scss';
 import { checkEmail } from '../../../auth/redux/actions/auth.actions';
+import { uploadProfile } from '../../redux/actions/dashboard.actions';
 
 const styles = theme => ({
     button: {
@@ -22,10 +23,23 @@ class Profile extends React.Component {
         }
     }
 
+    handleCancelClick = () => {
+        this.setState({
+            isEditing: !this.state.isEditing
+        });
+    }
+
     handleEditClick = () => {
         this.setState({
             isEditing: !this.state.isEditing
         });
+    }
+
+    handleProfileSubmit = profile => {
+        this.setState({
+            isEditing: !this.state.isEditing
+        });
+        this.props.uploadProfile(profile);
     }
 
     handleCheckEmail = email => {
@@ -36,7 +50,14 @@ class Profile extends React.Component {
         const { classes } = this.props;
         return (
             <section className="profile">
-                {this.state.isEditing ? <ProfileForm profile={this.props.profile} handleEditClick={this.handleEditClick} isEmailAvailable={this.props.isEmailAvailable} checkEmail={this.handleCheckEmail} /> :
+                {this.state.isEditing ?
+                    <ProfileForm
+                        profile={this.props.profile}
+                        handleEditClick={this.handleEditClick}
+                        handleCancelClick={this.handleCancelClick}
+                        handleProfileSubmit={this.handleProfileSubmit}
+                        isEmailAvailable={this.props.isEmailAvailable}
+                        checkEmail={this.handleCheckEmail} /> :
                     <div className="profile-card">
                         <aside>
                             <img alt="profile-pic" src={this.props.profile.profilePicture || "https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"}></img>
@@ -75,6 +96,7 @@ const mapDispatchToProps = dispatch => {
         // logOut: () => dispatch(logOut()),
         // clearProfile: () => dispatch(clearProfile())
         checkEmail: email => dispatch(checkEmail(email)),
+        uploadProfile: profile => dispatch(uploadProfile(profile))
     }
 }
 

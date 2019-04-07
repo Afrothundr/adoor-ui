@@ -19,7 +19,7 @@ export const setProfile = profile => ({
 export const loadProfile = () => {
     const adoorApi = axios.create({
         baseURL: environment.API_BASE_URL
-        
+
     });
     const GET_PROFILE = `
         {
@@ -44,13 +44,13 @@ export const loadProfile = () => {
         dispatch(profileLoading(true));
         try {
             const result = await adoorApi
-            .post(
-                '',
-                { query: GET_PROFILE },
-                {
-                    headers: {'Authorization': "bearer " + getState().authReducer.token}
-                }
-            );
+                .post(
+                    '',
+                    { query: GET_PROFILE },
+                    {
+                        headers: { 'Authorization': "bearer " + getState().authReducer.token }
+                    }
+                );
             dispatch(profileLoading(false));
             if (!result.data.errors) {
                 dispatch(setProfile(result.data.data.seller));
@@ -70,15 +70,17 @@ export const uploadProfile = profile => {
 
     const UPDATE_SELLER = `
     mutation {
-        sellerLogin(
-            firstName: "${profile.firstName}",
-            lastName: "${profile.lastName}",
-            phoneNumber: "${profile.phoneNumber}",
-            bio: "${profile.bio}",
-            email: "${profile.email}",
-            company: "${profile.company}",
-            profilePicture: "${profile.profilePicture}",
-            title: "${profile.title}",
+        updateSeller(
+            update: {
+                firstName: "${profile.firstName}",
+                lastName: "${profile.lastName}",
+                phoneNumber: "${profile.phoneNumber}",
+                bio: "${profile.bio}",
+                email: "${profile.email}",
+                company: "${profile.company}",
+                profilePicture: "${profile.profilePicture}",
+                title: "${profile.title}",
+            },
             apiKey: "${environment.API_KEY}"
         ) {
             firstName
@@ -95,13 +97,25 @@ export const uploadProfile = profile => {
         }
     }`;
 
-    return dispatch => {
-        return adoorApi.post('', {query: UPDATE_SELLER})
-            .then(result => {
-                if (!result.data.errors) {
-                    dispatch(setProfile(result.data.data.sellerLogin))
-                }
-            })
+    return async (dispatch, getState) => {
+        dispatch(profileLoading(true));
+        try {
+            const result = await adoorApi.post(
+                '',
+                { query: UPDATE_SELLER },
+                {
+                    headers: { 'Authorization': "bearer " + getState().authReducer.token }
+                });
+            dispatch(profileLoading(false));
+            if (!result.data.errors) {
+                dispatch(setProfile(result.data.data.updateSeller))
+            }
+        } catch (err) {
+            console.log(err);
+            dispatch(profileLoading(false));
+            dispatch(profileLoadFailure());
+        }
+
     }
 }
 

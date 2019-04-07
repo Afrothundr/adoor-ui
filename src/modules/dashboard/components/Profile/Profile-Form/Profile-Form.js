@@ -146,13 +146,31 @@ class ProfileForm extends React.Component {
         }
     }
 
+    profileFormSubmit = event => {
+        event.preventDefault();
+        // for number format stripping
+        const numberPattern = /\d+/g;
+        const profile = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber.match(numberPattern).join([]),
+            company: this.state.company,
+            title: this.state.title,
+            profilePicture: this.state.profilePicture,
+            bio: this.state.bio
+        }
+        this.props.handleProfileSubmit(profile);
+        console.log(profile);
+    }
+
     render() {
         const { classes } = this.props;
         const formValues = this.state;
         return (
             <div className="profile-form">
             <h1>Edit Profile</h1>
-                <form>
+                <form onSubmit={this.profileFormSubmit}>
                     <div className="profile-form-rows">
                         <TextField
                             label="first name"
