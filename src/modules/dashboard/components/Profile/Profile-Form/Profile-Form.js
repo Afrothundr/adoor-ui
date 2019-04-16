@@ -47,16 +47,16 @@ class ProfileForm extends React.Component {
                 profilePicture: ''
             },
             validators: {
-                firstNameValid: false,
-                lastNameValid: false,
-                phoneNumberValid: false,
-                bioValid: false,
-                emailValid: false,
-                companyValid: false,
-                titleValid: false,
-                profilePictureValid: false,
+                firstNameValid: true,
+                lastNameValid: true,
+                phoneNumberValid: true,
+                bioValid: true,
+                emailValid: true,
+                companyValid: true,
+                titleValid: true,
+                profilePictureValid: true,
             },
-            formValid: false
+            formValid: true
         }
     }
 
@@ -88,9 +88,14 @@ class ProfileForm extends React.Component {
         }
     }
 
+    validateForm() {
+        const isFormVaild = Object.entries(this.state.validators).map(keyValPair => keyValPair[1]);
+        this.setState({ formValid: isFormVaild.every(e => e) });
+    }
+
     validateField(fieldName, value) {
         let fieldValidationErrors = this.state.formErrors;
-        let firstNameValid = this.state.validators.firstNameVaild;
+        let firstNameValid = this.state.validators.firstNameValid;
         let lastNameValid = this.state.validators.lastNameValid;
         let phoneNumberValid = this.state.validators.phoneNumberValid;
         let emailValid = this.state.validators.emailValid;
@@ -117,8 +122,8 @@ class ProfileForm extends React.Component {
                 fieldValidationErrors.email = emailValid && this.props.isEmailAvailable ? '' : ' is invalid';
                 break;
             case 'bio':
-                bioValid = value !== '';
-                fieldValidationErrors.bio = bioValid ? '' : 'bio cannot be empty';
+                bioValid = value !== '' && value.split('').length < 280;
+                fieldValidationErrors.bio = bioValid ? '' : 'bio cannot have more than 280 characters';
                 break;
             case 'company':
                 companyValid = value !== '';
@@ -135,7 +140,22 @@ class ProfileForm extends React.Component {
             default:
                 break;
         }
+
+        this.setState({
+            formErrors: fieldValidationErrors,
+            validators: {
+                firstNameValid: firstNameValid,
+                lastNameValid: lastNameValid,
+                phoneNumberValid: phoneNumberValid,
+                emailValid: emailValid,
+                bioValid: bioValid,
+                companyValid: companyValid,
+                titleValid: titleValid,
+                profilePictureValid: profilePictureValid
+            }
+        }, this.validateForm);
     }
+
     getEmailErrorMessage() {
         if (!this.props.isEmailAvailable) {
             return 'this email is alread registered';
@@ -279,8 +299,8 @@ class ProfileForm extends React.Component {
                     </div>
 
                     <div className="profile-form-actions">
-                        <Button className={classNames([classes.button, 'lowerCaseButton'])} onClick={this.props.handleEditClick} type="button">cancel</Button>
-                        <Button variant="contained" color="primary" className={classNames([classes.button, 'lowerCaseButton'])} type="submit">submit</Button>
+                        <Button className={classNames([classes.button, 'lowerCaseButton'])} onClick={this.props.handleCancelClick} type="button">cancel</Button>
+                        <Button variant="contained" color="primary" className={classNames([classes.button, 'lowerCaseButton'])} disabled={!this.state.formValid} type="submit">submit</Button>
                     </div>
                 </form>
             </div>

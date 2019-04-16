@@ -96,7 +96,7 @@ class Dashboard extends React.Component {
         };
     }
     componentWillMount() {
-        if(!this.props.profile.email) {
+        if (!this.props.profile.email) {
             this.props.loadProfile();
         }
     }
@@ -139,7 +139,8 @@ class Dashboard extends React.Component {
                         <div className='header-profile-container'>
                             <img className="header-logo" alt="" src={logo}></img>
                             <div className='profile-container'>
-                                <img alt="profile-pic" src={this.props.profile.profilePicture || "https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"}></img>
+                                <div id="profile-pic-container" style={{ backgroundImage: `url("${this.props.profile.profilePicture || "https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"}")` }}>
+                                </div>
                                 <h4>{this.props.profile.firstName}</h4>
                             </div>
                         </div>
@@ -193,7 +194,7 @@ class Dashboard extends React.Component {
                     </List>
                 </Drawer>
                 <main className={classes.content}>
-                    <Route path="/dashboard/profile"  component={Profile} />
+                    <Route path="/dashboard/profile" component={Profile} />
                 </main>
             </div>
         );

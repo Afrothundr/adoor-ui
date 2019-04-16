@@ -6,8 +6,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ProfileForm from './Profile-Form/Profile-Form';
 import './Profile.scss';
-import { checkEmail } from '../../../auth/redux/actions/auth.actions';
+import { checkEmail, clearAuthErrors } from '../../../auth/redux/actions/auth.actions';
 import { uploadProfile } from '../../redux/actions/dashboard.actions';
+import { ProfileActions } from './Profile-Actions/Profile-Actions';
 
 const styles = theme => ({
     button: {
@@ -24,6 +25,7 @@ class Profile extends React.Component {
     }
 
     handleCancelClick = () => {
+        this.props.clearAuthErrors();
         this.setState({
             isEditing: !this.state.isEditing
         });
@@ -46,6 +48,16 @@ class Profile extends React.Component {
         this.props.checkEmail(email);
     }
 
+    formatPhoneNumber = number => {
+        if (!number) return null;
+        const numArray = number.split('');
+        numArray.splice(0, 0, '(');
+        numArray.splice(4, 0, ')');
+        numArray.splice(5, 0, '-');
+        numArray.splice(9, 0, '-');
+        return numArray.join('');
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -57,18 +69,20 @@ class Profile extends React.Component {
                         handleCancelClick={this.handleCancelClick}
                         handleProfileSubmit={this.handleProfileSubmit}
                         isEmailAvailable={this.props.isEmailAvailable}
-                        checkEmail={this.handleCheckEmail} /> :
+                        checkEmail={this.handleCheckEmail}
+                        /> :
                     <div className="profile-card">
                         <aside>
-                            <img alt="profile-pic" src={this.props.profile.profilePicture || "https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"}></img>
+                            <div id="profile-pic-container" style={{ backgroundImage: `url("${this.props.profile.profilePicture || "https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"}")` }}>
+                            </div>
                         </aside>
                         <article>
                             <h1>{this.props.profile.firstName || '(First Name)'} {this.props.profile.lastName || '(Last Name)'}</h1>
                             <h3>{this.props.profile.title || '(Title)'}</h3>
                             <address>
-                                <h5>{this.props.profile.phoneNumber || '(Phone Number)'}</h5>
-                                <h5>{this.props.profile.email || '(Email)'}</h5>
                                 <h5>{this.props.profile.company || '(Company)'}</h5>
+                                <h5>{this.formatPhoneNumber(this.props.profile.phoneNumber) || '(Phone Number)'}</h5>
+                                <h5>{this.props.profile.email || '(Email)'}</h5>
                             </address>
                             <p>
                                 {this.props.profile.bio || ('Add Bio')}
@@ -77,6 +91,7 @@ class Profile extends React.Component {
                         </article>
                     </div>
                 }
+                { !this.state.isEditing && <ProfileActions profile={this.props.profile} /> }
             </section>
         )
     }
@@ -96,7 +111,8 @@ const mapDispatchToProps = dispatch => {
         // logOut: () => dispatch(logOut()),
         // clearProfile: () => dispatch(clearProfile())
         checkEmail: email => dispatch(checkEmail(email)),
-        uploadProfile: profile => dispatch(uploadProfile(profile))
+        uploadProfile: profile => dispatch(uploadProfile(profile)),
+        clearAuthErrors: () => dispatch(clearAuthErrors())
     }
 }
 

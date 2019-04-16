@@ -1,3 +1,4 @@
+@import '../../../../theme.scss';
 .header {
     background-color: #FFFFFF;
     &-logo {
@@ -17,9 +18,14 @@
         flex-direction: row;
         align-items: center;
         color: grey;
-        img {
+        #profile-pic-container {
+            height: 50px;
             width: 50px;
             border-radius: 50%;
+            overflow: auto;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
         h4 {
             margin-left: 20px;
@@ -53,4 +59,11 @@ main {
     justify-content: center;
     height: 100%;
     margin-top: 70px;
+}
+
+.link-active {
+    i {
+        background-color: $primary-light;
+    }
+
 }
