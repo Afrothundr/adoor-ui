@@ -1,0 +1,37 @@
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+    padding: 30px 25px;
+    background-color: white;
+    h1 {
+        margin-left: 25px
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    &-rows {
+        margin: 10px 0;
+        width: 100%;
+        > div{
+            margin: 0 10px;
+        }
+    }
+    &-actions {
+        display: flex;
+        flex-direction: row;
+        align-self: flex-end;
+    }
+
+    .full-length {
+        width: 100%;
+        > div{
+            width: 100%;
+        }
+    }
+
+}

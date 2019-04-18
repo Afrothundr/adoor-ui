@@ -1,0 +1,47 @@
+@import '../../../../../theme.scss';
+.profile-actions {
+    margin: 25px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    &-cards {
+        min-width: 150px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+        padding: 30px 25px; 
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-content: baseline;
+        h1 {
+            border-right: 1px solid $book-light;
+            padding-right: 10px;
+            margin: 0 10px 0 0;
+            font-size: 50px;
+            
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        #messages {
+            i {
+                color: $book-light;
+            }
+        }
+        .active-listing {
+            color: #28C9B4;
+        }
+        .expired-listing {
+            color: #C96328;
+        }
+    }
+}
+
+#messages-content {
+    border-left: 1px solid $book-light;
+    padding-left: 10px;
+    margin: 0 0 0 20px;
+}

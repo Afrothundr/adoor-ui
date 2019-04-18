@@ -1,0 +1,43 @@
+section {
+  max-width: 66%;
+  min-width: 250px;
+
+  .profile-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+    padding: 30px 25px;
+    aside {
+      padding: 0 20px;
+      #profile-pic-container {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        overflow: auto;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+    article {
+      padding: 0 20px;
+      address {
+        display: flex;
+        flex-direction: row;
+        h5 {
+          margin: 5px 12px 0 0;
+        }
+      }
+      p {
+        padding-right: 10px;
+      }
+    }
+  }
+  .lowerCaseButton {
+    float: right;
+    text-transform: none;
+  }
+}

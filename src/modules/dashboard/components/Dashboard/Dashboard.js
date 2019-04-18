@@ -1,4 +1,3 @@
-import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -15,9 +14,13 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import logo from '../../../../images/logo.png';
+import React from 'react';
 import { connect } from 'react-redux';
+import { Route, Link, NavLink } from 'react-router-dom';
+import logo from '../../../../images/logo.png';
 import { logOut } from '../../../auth/redux/actions/auth.actions';
+import { clearProfile, loadProfile } from '../../redux/actions/dashboard.actions';
+import Profile from '../Profile/Profile';
 import './Dashboard.scss';
 
 const drawerWidth = 240;
@@ -91,7 +94,11 @@ class Dashboard extends React.Component {
         this.state = {
             open: false,
         };
-
+    }
+    componentWillMount() {
+        if (!this.props.profile.email) {
+            this.props.loadProfile();
+        }
     }
 
     handleDrawerOpen = () => {
@@ -103,12 +110,12 @@ class Dashboard extends React.Component {
     };
 
     handleLogOut = () => {
+        this.props.clearProfile()
         this.props.logOut()
     }
 
     render() {
         const { classes, theme } = this.props;
-
         return (
             <div className={classes.root}>
                 <CssBaseline />
@@ -132,15 +139,16 @@ class Dashboard extends React.Component {
                         <div className='header-profile-container'>
                             <img className="header-logo" alt="" src={logo}></img>
                             <div className='profile-container'>
-                                <img src="https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"></img>
-                                <h4>Whitney</h4>
+                                <div id="profile-pic-container" style={{ backgroundImage: `url("${this.props.profile.profilePicture || "https://feedback.seekingalpha.com/s/cache/7a/4b/7a4bcc11fadeac0bb827e141cb770f56.png"}")` }}>
+                                </div>
+                                <h4>{this.props.profile.firstName}</h4>
                             </div>
                         </div>
                     </Toolbar>
                 </AppBar>
-                <Drawer className="sidebar"
+                <Drawer
                     variant="permanent"
-                    className={classNames(classes.drawer, {
+                    className={classNames(classes.drawer, 'sidebar', {
                         [classes.drawerOpen]: this.state.open,
                         [classes.drawerClose]: !this.state.open,
                     })}
@@ -159,35 +167,34 @@ class Dashboard extends React.Component {
                     </div>
                     <Divider />
                     <List id="sidebar">
-                        <ListItem button>
+                        <ListItem button component={NavLink} to="/dashboard/profile" activeClassName="link-active">
                             <ListItemIcon><div><i className="fas fa-user-circle fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='profile' />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemIcon> <i className="fas fa-plus fa-2x"></i></ListItemIcon>
+                        <ListItem button component={NavLink} to="/dashboard/add-listing" activeClassName="link-active">
+                            <ListItemIcon><div><i className="fas fa-plus fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='add listing' />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemIcon> <i className="fas fa-poll fa-2x"></i></ListItemIcon>
+                        <ListItem button component={NavLink} to="/dashboard/analytics" activeClassName="link-active">
+                            <ListItemIcon><div><i className="fas fa-poll fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='analytics' />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemIcon> <i className="fas fa-briefcase fa-2x"></i></ListItemIcon>
+                        <ListItem button component={NavLink} to="/dashboard/manage" activeClassName="link-active">
+                            <ListItemIcon><div><i className="fas fa-briefcase fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='manage listings' />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemIcon> <i className="fas fa-comments fa-2x"></i></ListItemIcon>
+                        <ListItem button component={NavLink} to="/dashboard/messages" activeClassName="link-active">
+                            <ListItemIcon><div><i className="fas fa-comments fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='messages' />
                         </ListItem>
                         <ListItem button onClick={this.handleLogOut}>
-                            <ListItemIcon> <i className="fas fa-sign-out-alt fa-2x"></i></ListItemIcon>
+                            <ListItemIcon><div><i className="fas fa-sign-out-alt fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='log out' />
                         </ListItem>
                     </List>
                 </Drawer>
                 <main className={classes.content}>
-                    <div className={classes.toolbar} />
-
+                    <Route path="/dashboard/profile" component={Profile} />
                 </main>
             </div>
         );
@@ -196,11 +203,16 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => {
     return {
+        profilePending: state.dashboardReducer.profilePending,
+        profileLoadFailed: state.dashboardReducer.profileLoadFailed,
+        profile: state.dashboardReducer.profile
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        logOut: () => dispatch(logOut())
+        loadProfile: () => dispatch(loadProfile()),
+        logOut: () => dispatch(logOut()),
+        clearProfile: () => dispatch(clearProfile())
     }
 }
 

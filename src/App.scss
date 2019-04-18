@@ -1,3 +1,4 @@
+@import './theme.scss';
 .App {
   width: 100vw;
   height: 100vh;
@@ -8,5 +9,31 @@
   &-Main {
     width: 100%;
     height: 100%;
+    h1 {
+      color: $book-main;
+      font-weight: bold;
+      font-family: 'Open Sans', sans-serif;
+      margin: 5px 0;
+      font-size: 30px;
+    }
+    h3 {
+      color: $book-light;
+      margin: 5px 0;
+      font-size: 20px;
+    }
+
+    h5 {
+      color: $book-lighter;
+      margin: 5px 0;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    p {
+      color: $book-main;
+      font-size: 16px;
+      line-height: 1.6;
+    }
   }
 }

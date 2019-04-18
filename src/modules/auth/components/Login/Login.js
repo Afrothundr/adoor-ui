@@ -73,7 +73,7 @@ export class Login extends React.Component {
             borderBottom: '3px solid #C9283E'
         };
         if (this.props.token) {
-            return <Redirect to='/dashboard' />
+            return <Redirect to='/dashboard/profile' />
         }
         return (
             <div className="login">
@@ -117,7 +117,6 @@ export class Login extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.authReducer);
     return {
         token: state.authReducer.token,
         isLoading: state.authReducer.loginPending,
