@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, NavLink } from 'react-router-dom';
 import logo from '../../../../images/logo.png';
 import { logOut } from '../../../auth/redux/actions/auth.actions';
 import { clearProfile, loadProfile } from '../../redux/actions/dashboard.actions';
@@ -167,23 +167,23 @@ class Dashboard extends React.Component {
                     </div>
                     <Divider />
                     <List id="sidebar">
-                        <ListItem button component={Link} to="/dashboard/profile">
+                        <ListItem button component={NavLink} to="/dashboard/profile" activeClassName="link-active">
                             <ListItemIcon><div><i className="fas fa-user-circle fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='profile' />
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard/add-listing">
+                        <ListItem button component={NavLink} to="/dashboard/add-listing" activeClassName="link-active">
                             <ListItemIcon><div><i className="fas fa-plus fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='add listing' />
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard/analytics">
+                        <ListItem button component={NavLink} to="/dashboard/analytics" activeClassName="link-active">
                             <ListItemIcon><div><i className="fas fa-poll fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='analytics' />
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard/manage">
+                        <ListItem button component={NavLink} to="/dashboard/manage" activeClassName="link-active">
                             <ListItemIcon><div><i className="fas fa-briefcase fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='manage listings' />
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard/messages">
+                        <ListItem button component={NavLink} to="/dashboard/messages" activeClassName="link-active">
                             <ListItemIcon><div><i className="fas fa-comments fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='messages' />
                         </ListItem>

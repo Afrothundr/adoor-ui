@@ -23,7 +23,7 @@ export function ProfileActions(props) {
             <div className="profile-actions-cards" id="messages">
             <Link component={Link} to="/dashboard/messages" >
                 <Badge badgeContent={0} color="primary">
-                <i class="far fa-comments fa-4x"></i>
+                <i className="far fa-comments fa-4x"></i>
                 </Badge>
             </Link>
                 <div id="messages-content">
