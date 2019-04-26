@@ -22,6 +22,7 @@ import { logOut } from '../../../auth/redux/actions/auth.actions';
 import { clearProfile, loadProfile } from '../../redux/actions/dashboard.actions';
 import Profile from '../Profile/Profile';
 import './Dashboard.scss';
+import Manage from '../Manage/Manage';
 
 const drawerWidth = 240;
 
@@ -195,6 +196,7 @@ class Dashboard extends React.Component {
                 </Drawer>
                 <main className={classes.content}>
                     <Route path="/dashboard/profile" component={Profile} />
+                    <Route path="/dashboard/manage" component={Manage} />
                 </main>
             </div>
         );

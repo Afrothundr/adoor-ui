@@ -1,0 +1,85 @@
+@import '../../../../theme.scss';
+
+.manage {
+    min-width: 500px;
+    #header {
+        color: $primary;
+    }
+
+    &-table-actions {
+        display: flex;
+        h3 {
+            margin-right: 15px;
+        }
+        .active-color {
+            color: #28C9B4;
+        }
+        .expired-color {
+            color: #C96328;
+        }
+    
+        .inactive {
+            color: #A8A8A8;
+        }
+    }
+
+    &-table {
+        display: grid;
+        grid-template-columns: repeat(8, minmax(50px, 1fr));
+        grid-template-rows: auto;
+        padding: 10px;
+        &-head {
+            grid-column: 1 / -1;
+            grid-row-start: 1;
+            display: grid;
+            grid-template-columns: repeat(8, minmax(50px, 1fr)); 
+            .manage-table-row {
+                background-color: #F2F2F2;
+            }
+        }
+        &-body {
+            grid-column: 1 / -1;
+            grid-row-start: 2;
+            display: grid;
+            grid-template-columns: repeat(8, minmax(50px, 1fr)); 
+            .manage-table-row {
+                background-color: #FFF;
+            }
+        }
+        &-row {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(8, minmax(50px, 1fr)); 
+        }
+        &-cell {
+            padding: 10px;
+        }
+        .picture {
+            justify-self: center;
+        }
+        .address {
+            justify-self: start;
+        }
+        .price {
+            justify-self: end;
+        }
+        .sqft {
+            justify-self: center;
+        }
+        .bed {
+            justify-self: center;
+        }
+        .activity {
+            justify-self: center;
+        }
+        .created {
+            justify-self: start;
+        }
+        .updated {
+            justify-self: start;
+        }
+
+    }
+
+
+}

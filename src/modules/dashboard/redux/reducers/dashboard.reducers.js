@@ -11,6 +11,22 @@ export default function dashboardReducer(state = intialState.dashboard, action) 
             return {...state, profile: action.profile }
         case actionType.CLEAR_PROFILE:
             return intialState.dashboard
+        case actionType.SET_LISTINGS:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    listings: action.payload
+                }
+             }
+        case actionType.CLEAR_LISTINGS:
+             return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    listings: []
+                }
+             }
         default:
             return state;
     }

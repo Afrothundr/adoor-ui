@@ -122,3 +122,59 @@ export const uploadProfile = profile => {
 export const clearProfile = () => ({
     type: actions.CLEAR_PROFILE
 });
+
+export const loadListings = () => {
+    const adoorApi = axios.create({
+        baseURL: environment.API_BASE_URL
+
+    });
+    const LOAD_LISTINGS = `
+        {
+            seller
+            {
+                listings {
+                    id
+                    address
+                    price
+                    priceRange
+                    squareFootage
+                    bedrooms
+                    bathrooms
+                    views
+                    created
+                    updated
+                    matches {
+                        id
+                    }
+                }
+            }
+        }
+    `;
+
+    return async (dispatch, getState) => {
+        // dispatch(profileLoading(true));
+        try {
+            const result = await adoorApi
+                .post(
+                    '',
+                    { query: LOAD_LISTINGS },
+                    {
+                        headers: { 'Authorization': "bearer " + getState().authReducer.token }
+                    }
+                );
+            // dispatch(profileLoading(false));
+            if (!result.data.errors) {
+                dispatch(setListings(result.data.data.seller));
+            }
+        } catch (err) {
+            console.log(err);
+            // dispatch(profileLoading(false));
+            // dispatch(profileLoadFailure());
+        }
+    }
+};
+
+export const setListings = listings => ({
+    type: actions.SET_LISTINGS,
+    listings
+});
