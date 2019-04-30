@@ -134,9 +134,11 @@ export const loadListings = () => {
             {
                 listings {
                     id
+                    pictures
                     address
                     price
-                    priceRange
+                    lowPrice
+                    highPrice
                     squareFootage
                     bedrooms
                     bathrooms
@@ -164,7 +166,7 @@ export const loadListings = () => {
                 );
             // dispatch(profileLoading(false));
             if (!result.data.errors) {
-                dispatch(setListings(result.data.data.seller));
+                dispatch(setListings(result.data.data.seller.listings));
             }
         } catch (err) {
             console.log(err);

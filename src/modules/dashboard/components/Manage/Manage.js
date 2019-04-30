@@ -2,11 +2,9 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import './Manage.scss';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import { loadListings } from '../../redux/actions/dashboard.actions';
+import NumberFormat from 'react-number-format';
+import * as moment from 'moment';
 
 const styles = theme => ({
     button: {
@@ -14,21 +12,16 @@ const styles = theme => ({
     }
 });
 
-const CustomTableCell = withStyles(theme => ({
-    head: {
-        backgroundColor: '#F2F2F2',
-    },
-    body: {
-        fontSize: 14,
-    },
-}))(TableCell);
-
 class Manage extends React.Component {
     constructor() {
         super();
         this.state = {
             showActiveListings: true
         }
+    }
+
+    componentWillMount() {
+        this.props.loadListings();
     }
 
     toggleTables = linkThatWasClicked => {
@@ -66,53 +59,55 @@ class Manage extends React.Component {
                             <div className="manage-table-cell price">price</div>
                             <div className="manage-table-cell sqft">sqft</div>
                             <div className="manage-table-cell bed">bed</div>
-                            <div className="manage-table-cell activiy">activty</div>
+                            <div className="manage-table-cell bath">bath</div>
+                            <div className="manage-table-cell activity">activty</div>
                             <div className="manage-table-cell created">created</div>
                             <div className="manage-table-cell updated">updated</div>
                         </div>
                     </div>
                     <div className="manage-table-body">
-                        <div className="manage-table-row">
-                            <div className="manage-table-cell picture"></div>
-                            <div className="manage-table-cell address">address</div>
-                            <div className="manage-table-cell price">price</div>
-                            <div className="manage-table-cell sqft">sqft</div>
-                            <div className="manage-table-cell bed">bed</div>
-                            <div className="manage-table-cell activiy">activty</div>
-                            <div className="manage-table-cell created">created</div>
-                            <div className="manage-table-cell updated">updated</div>
-                        </div>
+                        {this.props.profile.listings && this.props.profile.listings.map(listing => {
+                            return (
+                                <div className="manage-table-row" key={listing.id}>
+                                    <div className="manage-table-cell picture">
+                                        <div style={{ backgroundImage: `url("${listing.pictures && listing.pictures[0]}")` }}></div>
+                                    </div>
+                                    <div className="manage-table-cell address">
+                                        <p>{listing.address}</p>
+                                    </div>
+                                    <div className="manage-table-cell price">
+                                    <NumberFormat value={listing.price} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={value => <p>{value}</p>} />
+                                    <p>{
+                                        listing.lowPrice && listing.lowPrice.toString().substring(0, listing.lowPrice.toString().length -3) + ' K'
+                                        } {
+                                            listing.highPrice && '-' + listing.highPrice.toString().substring(0, listing.highPrice.toString().length -3) + ' K' 
+                                        }
+                                    </p>
+                                    </div>
+                                    <div className="manage-table-cell sqft">
+                                        <p>{listing.squareFootage}</p>
+                                    </div>
+                                    <div className="manage-table-cell bed">
+                                        <p>{listing.bedrooms}</p>
+                                    </div>
+                                    <div className="manage-table-cell bath">
+                                        <p>{listing.bathrooms}</p>
+                                    </div>
+                                    <div className="manage-table-cell activity">
+                                        <p>{listing.matches && listing.matches.length} matches</p>
+                                        <p>{listing.views} views</p>
+                                    </div>
+                                    <div className="manage-table-cell created">
+                                        <p>{moment.utc(listing.created).format('dddd MMMM Do YYYY')}</p>
+                                    </div>
+                                    <div className="manage-table-cell updated">
+                                    <p>{moment.utc(listing.updated).format('dddd MMMM Do YYYY')}</p>
+                                    </div>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
-                {/* <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <CustomTableCell align="left"></CustomTableCell>
-                            <CustomTableCell align="left">address</CustomTableCell>
-                            <CustomTableCell align="right">price</CustomTableCell>
-                            <CustomTableCell align="right">sqft</CustomTableCell>
-                            <CustomTableCell align="right">bed</CustomTableCell>
-                            <CustomTableCell align="right">bath</CustomTableCell>
-                            <CustomTableCell align="right">activty</CustomTableCell>
-                            <CustomTableCell align="right">created</CustomTableCell>
-                            <CustomTableCell align="right">updated</CustomTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                        <CustomTableCell align="left"></CustomTableCell>
-                            <CustomTableCell align="left">address</CustomTableCell>
-                            <CustomTableCell align="right">price</CustomTableCell>
-                            <CustomTableCell align="right">sqft</CustomTableCell>
-                            <CustomTableCell align="right">bed</CustomTableCell>
-                            <CustomTableCell align="right">bath</CustomTableCell>
-                            <CustomTableCell align="right">activty</CustomTableCell>
-                            <CustomTableCell align="right">created</CustomTableCell>
-                            <CustomTableCell align="right">updated</CustomTableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table> */}
-
             </section>
         )
     }
@@ -125,6 +120,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
+        loadListings: () => dispatch(loadListings())
     }
 }
 
