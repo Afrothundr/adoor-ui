@@ -1,4 +1,5 @@
 import * as actions from './dashboard.action.types';
+import * as moment from 'moment';
 import axios from 'axios';
 import { environment } from '../../../../environments';
 
@@ -166,7 +167,17 @@ export const loadListings = () => {
                 );
             // dispatch(profileLoading(false));
             if (!result.data.errors) {
-                dispatch(setListings(result.data.data.seller.listings));
+                const expiredListings = [];
+                const validListings = [];
+                result.data.data.seller.listings.forEach(listing => {
+                    if (moment.utc(listing.updated).isBefore(moment().subtract(30, 'days'))) {
+                        expiredListings.push(listing);
+                    } else {
+                        validListings.push(listing);
+                    }
+                });
+                dispatch(setListings(validListings));
+                dispatch(setExpiredListings(expiredListings));
             }
         } catch (err) {
             console.log(err);
@@ -180,3 +191,8 @@ export const setListings = listings => ({
     type: actions.SET_LISTINGS,
     listings
 });
+
+export const setExpiredListings = expiredListings => ({
+    type: actions.SET_EXPIRED_LISTINGS,
+    expiredListings
+})

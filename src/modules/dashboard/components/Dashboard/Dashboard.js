@@ -180,7 +180,7 @@ class Dashboard extends React.Component {
                             <ListItemIcon><div><i className="fas fa-poll fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='analytics' />
                         </ListItem>
-                        <ListItem button component={NavLink} to="/dashboard/manage" activeClassName="link-active">
+                        <ListItem button component={NavLink} to="/dashboard/manage/active" activeClassName="link-active">
                             <ListItemIcon><div><i className="fas fa-briefcase fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='manage listings' />
                         </ListItem>
@@ -196,7 +196,7 @@ class Dashboard extends React.Component {
                 </Drawer>
                 <main className={classes.content}>
                     <Route path="/dashboard/profile" component={Profile} />
-                    <Route path="/dashboard/manage" component={Manage} />
+                    <Route path="/dashboard/manage/:expired" component={Manage} />
                 </main>
             </div>
         );

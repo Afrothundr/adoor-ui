@@ -7,14 +7,14 @@ export function ProfileActions(props) {
     return (
         <div className="profile-actions">
             <div className="profile-actions-cards">
-                <Link component={Link} to="/dashboard/manage"><h1 className="active-listing">{props.profile.listings.length || 0}</h1> </Link>
+                <Link component={Link} to="/dashboard/manage/active"><h1 className="active-listing">{props.profile.listings.length || 0}</h1> </Link>
                 <div>
                     <h3>active</h3>
                     <h3>listings</h3>
                 </div>
             </div>
             <div className="profile-actions-cards">
-                <Link component={Link} to="/dashboard/manage"><h1 className="expired-listing">{0}</h1></Link>
+                <Link component={Link} to="/dashboard/manage/expired"><h1 className="expired-listing">{0}</h1></Link>
                 <div>
                     <h3>expired</h3>
                     <h3>listings</h3>

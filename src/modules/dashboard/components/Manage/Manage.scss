@@ -11,6 +11,7 @@
     display: flex;
     h3 {
       margin-right: 15px;
+      cursor: pointer;
     }
     .active-color {
       color: #28c9b4;
@@ -21,98 +22,6 @@
 
     .inactive {
       color: #a8a8a8;
-    }
-  }
-
-  &-table {
-    display: grid;
-    grid-template-columns: repeat(9, minmax(50px, 1fr));
-    grid-template-rows: auto;
-    padding: 10px;
-    border-radius: 18px;
-    &-head {
-      grid-column: 1 / -1;
-      grid-row-start: 1;
-      display: grid;
-      grid-template-columns: repeat(9, minmax(50px, 1fr));
-      .manage-table-row {
-        background-color: #f2f2f2;
-      }
-    }
-    &-body {
-      grid-column: 1 / -1;
-      grid-row-start: 2;
-      display: grid;
-      grid-template-columns: repeat(9, minmax(50px, 1fr));
-      .manage-table-row {
-        background-color: #fff;
-        border-bottom: solid 1px #707070;
-      }
-    }
-    &-row {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: repeat(9, minmax(50px, 1fr));
-      align-items: center;
-    }
-    &-cell {
-      padding: 15px;
-      p {
-        opacity: 0.73;
-        margin: 0;
-      }
-    }
-    .picture {
-      justify-self: center;
-      div {
-        height: 70px;
-        width: 70px;
-        border-radius: 50%;
-        overflow: auto;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-    }
-    .address {
-      justify-self: start;
-    }
-    .price {
-      justify-self: end;
-      p {
-        padding-right: 0;
-        text-align: right;
-      }
-      p:first-child {
-        font-weight: bold;
-      }
-      p:last-child {
-          font-size: 14px;
-      }
-    }
-    .sqft {
-      justify-self: center;
-    }
-    .bed {
-      justify-self: center;
-    }
-    .bath {
-      justify-self: center;
-    }
-    .activity {
-      justify-self: center;
-      p {
-          text-align: center;
-      }
-      p:first-child {
-        font-weight: bold;
-      }
-    }
-    .created {
-      justify-self: start;
-    }
-    .updated {
-      justify-self: start;
     }
   }
 }
