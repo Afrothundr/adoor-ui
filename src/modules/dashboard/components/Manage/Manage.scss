@@ -1,0 +1,27 @@
+@import "../../../../theme.scss";
+
+.manage {
+  min-width: 500px;
+  max-width: initial;
+  #header {
+    color: $primary;
+  }
+
+  &-table-actions {
+    display: flex;
+    h3 {
+      margin-right: 15px;
+      cursor: pointer;
+    }
+    .active-color {
+      color: #28c9b4;
+    }
+    .expired-color {
+      color: #c96328;
+    }
+
+    .inactive {
+      color: #a8a8a8;
+    }
+  }
+}

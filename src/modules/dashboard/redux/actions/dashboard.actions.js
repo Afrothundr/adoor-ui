@@ -1,4 +1,5 @@
 import * as actions from './dashboard.action.types';
+import * as moment from 'moment';
 import axios from 'axios';
 import { environment } from '../../../../environments';
 
@@ -122,3 +123,76 @@ export const uploadProfile = profile => {
 export const clearProfile = () => ({
     type: actions.CLEAR_PROFILE
 });
+
+export const loadListings = () => {
+    const adoorApi = axios.create({
+        baseURL: environment.API_BASE_URL
+
+    });
+    const LOAD_LISTINGS = `
+        {
+            seller
+            {
+                listings {
+                    id
+                    pictures
+                    address
+                    price
+                    lowPrice
+                    highPrice
+                    squareFootage
+                    bedrooms
+                    bathrooms
+                    views
+                    created
+                    updated
+                    matches {
+                        id
+                    }
+                }
+            }
+        }
+    `;
+
+    return async (dispatch, getState) => {
+        // dispatch(profileLoading(true));
+        try {
+            const result = await adoorApi
+                .post(
+                    '',
+                    { query: LOAD_LISTINGS },
+                    {
+                        headers: { 'Authorization': "bearer " + getState().authReducer.token }
+                    }
+                );
+            // dispatch(profileLoading(false));
+            if (!result.data.errors) {
+                const expiredListings = [];
+                const validListings = [];
+                result.data.data.seller.listings.forEach(listing => {
+                    if (moment.utc(listing.updated).isBefore(moment().subtract(30, 'days'))) {
+                        expiredListings.push(listing);
+                    } else {
+                        validListings.push(listing);
+                    }
+                });
+                dispatch(setListings(validListings));
+                dispatch(setExpiredListings(expiredListings));
+            }
+        } catch (err) {
+            console.log(err);
+            // dispatch(profileLoading(false));
+            // dispatch(profileLoadFailure());
+        }
+    }
+};
+
+export const setListings = listings => ({
+    type: actions.SET_LISTINGS,
+    listings
+});
+
+export const setExpiredListings = expiredListings => ({
+    type: actions.SET_EXPIRED_LISTINGS,
+    expiredListings
+})
