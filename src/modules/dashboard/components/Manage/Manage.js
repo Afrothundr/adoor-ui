@@ -22,7 +22,6 @@ class Manage extends React.Component {
 
     componentWillMount() {
         this.props.loadListings();
-        console.log(this.props.match.params);
         const paramResult = this.props.match.params.expired === 'active';
         this.setState({
             showActiveListings: paramResult
