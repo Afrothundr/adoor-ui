@@ -5,6 +5,7 @@ import Forms from '../../../../shared/utilities/forms';
 import Formsy from 'formsy-react';
 import Button from '@material-ui/core/Button';
 
+
 class AddDetails extends React.Component {
     constructor() {
         super();
@@ -44,24 +45,26 @@ class AddDetails extends React.Component {
                         <div className="section-1">
                             <Forms.Input
                                 name="bedrooms"
-                                type="text"
+                                type="number"
                                 validationError="bedrooms are required"
                                 label="bedrooms"
                                 required />
                             <Forms.Input
                                 name="bathrooms"
                                 label="bathrooms"
-                                type="text"
+                                type="number"
                                 validationError="bathrooms are required"
                                 required />
-                            <Forms.Input
+                            <Forms.MaskedInput
                                 name="squareFootage"
                                 type="text"
-                                validationError="squareFootage is required"
-                                label="squareFootage"
+                                mask="999999"
+                                validationError="square footage is required"
+                                label="square footage"
                                 required />
-                            <Forms.Input
+                            <Forms.MaskedInput
                                 name="price"
+                                mask="$ 999999999"
                                 label="price"
                                 type="text"
                                 validationError="price is required"
@@ -81,41 +84,54 @@ class AddDetails extends React.Component {
                                 validationError="heating type is required"
                                 label="heating type"
                                 required />
-                            <Forms.Input
+                            <Forms.Select
                                 name="cooling"
                                 label="cooling type"
-                                type="text"
+                                options={[
+                                    'Central',
+                                    'Window',
+                                    'Ductless-Split',
+                                ]}
                                 validationError="cooling type is required"
                                 required />
-                            <Forms.Input
+                            <Forms.Select
                                 name="kitchen"
-                                type="text"
+                                options={[
+                                    'U-Shaped',
+                                    'L-Shaped',
+                                    'Galley',
+                                ]}
                                 validationError="kitchen type is required"
                                 label="kitchen type"
                                 required />
-                            <Forms.Input
+                            <Forms.Select
                                 name="laundry"
                                 label="laundry type"
-                                type="text"
+                                options={[
+                                    'hookups available',
+                                    'washer and dryer included',
+                                    'none',
+                                ]}
                                 validationError="laundry type is required"
                                 required />
                         </div>
                         <div className="section-3">
-                            <Forms.Input
+                            <Forms.MaskedInput
+                                mask="9999"
                                 name="year built"
                                 label="year built"
                                 type="text"
                                 validationError="year built is required"
                                 required />
-                            <Forms.Input
+                            <Forms.MaskedInput
+                                mask="9999"
                                 name="year renovated"
                                 type="text"
                                 label="year renovated"
                             />
-                            <Forms.Input
+                            <Forms.CheckboxInput
                                 name="fireplace"
                                 label="does it have a fireplace?"
-                                type="text"
                             />
                         </div>
                     </div>

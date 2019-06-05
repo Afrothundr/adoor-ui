@@ -34,6 +34,7 @@ class MaskedInput extends React.Component {
           value={this.props.getValue() || ''}
           onChange={this.changeValue}
           className={this.props.classes.textField}
+          maskChar={null}
         >
           {() => <TextField
             type={this.props.type}
