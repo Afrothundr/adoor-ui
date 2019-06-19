@@ -198,7 +198,9 @@ class Dashboard extends React.Component {
                 <main className={classes.content}>
                     <Route path="/dashboard/profile" component={Profile} />
                     <Route path="/dashboard/manage/:expired" component={Manage} />
-                    <Route path="/dashboard/add-listing" component={Add} />
+                    <Route path="/dashboard/add-listing"
+                        render={(props) => <Add {...props} profileId={this.props.profile.id} />}
+                    />
                 </main>
             </div>
         );

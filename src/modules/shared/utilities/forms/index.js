@@ -4,6 +4,7 @@ import Select from './select';
 import CheckboxInput from './checkbox';
 import CurrencyInput from './currency';
 import SquareFootageInput from './squarefootage';
+import TextArea from './textarea';
 
 
 export default {
@@ -12,5 +13,6 @@ export default {
     MaskedInput,
     CheckboxInput,
     CurrencyInput,
-    SquareFootageInput
+    SquareFootageInput,
+    TextArea
 }

@@ -26,6 +26,7 @@ export const loadProfile = () => {
         {
             seller
             {
+                id
                 firstName
                 lastName
                 phoneNumber
@@ -196,3 +197,52 @@ export const setExpiredListings = expiredListings => ({
     type: actions.SET_EXPIRED_LISTINGS,
     expiredListings
 })
+
+export const createListing = listing => {
+    const adoorApi = axios.create({
+        baseURL: environment.API_BASE_URL
+
+    });
+    const CREATE_LISTING = `
+    mutation {
+        createListing(
+        listing: {
+            pictures: ${listing.pictures}
+            description: ${listing.description},
+            address: ${listing.address},
+            city: ${listing.city},
+            zipcode: ${listing.zipcode},
+            bedrooms: ${listing.bedrooms},
+            bathrooms: ${listing.bathrooms},
+            squareFootage: ${listing.squareFootage},
+            price: ${listing.price},
+            yearBuilt: ${listing.yearBuilt},
+            heating: ${listing.heating},
+            cooling: ${listing.cooling},
+            kitchenType: ${listing.kitchenType},
+            laundry: ${listing.laundry},
+            fireplace: ${listing.fireplace}
+        }) {
+            listings {
+                id
+                pictures
+                address
+                price
+                lowPrice
+                highPrice
+                squareFootage
+                bedrooms
+                bathrooms
+                views
+                created
+                updated
+                matches {
+                    id
+                }
+            }
+        }
+    }
+    `;
+
+
+};

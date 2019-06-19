@@ -7,6 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import AddLocation from './Add-Location/Add-Location';
 import AddDetails from './Add-Details/Add-Details';
+import AddDescription from './Add-Description/Add-Description';
 
 const styles = theme => ({
     root: {
@@ -24,12 +25,14 @@ class Add extends React.Component {
             tabIndex: 0,
             location: {},
             details: {},
+            description: {},
             isFormValid: false
         }
     }
 
     addLocationRef = React.createRef();
     addDetailsRef = React.createRef();
+    addDescriptionRef = React.createRef();
 
 
     handleChange = (event, tabIndex) => {
@@ -96,17 +99,23 @@ class Add extends React.Component {
                     </Tabs>
                 </AppBar>
                 <article>
-                    {tabIndex === 0 && <AddLocation 
-                                            handleSubmit={this.handleLocationSubmit} 
+                    {tabIndex === 0 && <AddDescription
+                                            handleSubmit={this.handleDetailsSubmit} 
                                             isFormValid={this.handleValidCheck}
-                                            ref={this.addLocationRef}
+                                            ref={this.addDetailsRef}
+                                            profileId={this.props.profileId}
                                              />}
                     {tabIndex === 1 && <AddDetails
                                             handleSubmit={this.handleDetailsSubmit} 
                                             isFormValid={this.handleValidCheck}
                                             ref={this.addDetailsRef}
                                              />}
-                    {tabIndex === 2 && <p>Item Three</p>}
+                    {tabIndex === 2 && <AddDescription
+                                            handleSubmit={this.handleDetailsSubmit} 
+                                            isFormValid={this.handleValidCheck}
+                                            ref={this.addDetailsRef}
+                                            profileId={this.props.profileId}
+                                             />}
                 </article>
             </div>
         )

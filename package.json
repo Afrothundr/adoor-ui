@@ -45,6 +45,7 @@
     "react-apollo": "^2.3.3",
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.8.6",
+    "react-dropzone": "^10.1.5",
     "react-input-mask": "^2.0.4",
     "react-number-format": "^4.0.7",
     "react-redux": "^6.0.0",
