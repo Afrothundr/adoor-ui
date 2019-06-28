@@ -199,6 +199,7 @@ export const setExpiredListings = expiredListings => ({
 })
 
 export const createListing = listing => {
+    console.log(listing);
     const adoorApi = axios.create({
         baseURL: environment.API_BASE_URL
 
@@ -244,5 +245,36 @@ export const createListing = listing => {
     }
     `;
 
+    return async (dispatch, getState) => {
+        // dispatch(profileLoading(true));
+        try {
+            const result = await adoorApi
+                .post(
+                    '',
+                    { query: CREATE_LISTING },
+                    {
+                        headers: { 'Authorization': "bearer " + getState().authReducer.token }
+                    }
+                );
+            // dispatch(profileLoading(false));
+            if (!result.data.errors) {
+                const expiredListings = [];
+                const validListings = [];
+                result.data.data.seller.listings.forEach(listing => {
+                    if (moment.utc(listing.updated).isBefore(moment().subtract(30, 'days'))) {
+                        expiredListings.push(listing);
+                    } else {
+                        validListings.push(listing);
+                    }
+                });
+                dispatch(setListings(validListings));
+                dispatch(setExpiredListings(expiredListings));
+            }
+        } catch (err) {
+            console.log(err);
+            // dispatch(profileLoading(false));
+            // dispatch(profileLoadFailure());
+        }
+    }
 
 };

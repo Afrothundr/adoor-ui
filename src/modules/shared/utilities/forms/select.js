@@ -7,6 +7,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
+    lighter: {
+        color: 'rgba(0,0,0,.87)'
+    },
     button: {
         margin: theme.spacing.unit,
     }
@@ -32,7 +35,7 @@ class Input extends React.Component {
         return (
             <div className={className}>
                 <FormControl>
-                    <InputLabel htmlFor={this.props.label}>{this.props.label}</InputLabel>
+                    <InputLabel style={{'color': 'rgba(0,0,0,.25)'}} htmlFor={this.props.label}>{this.props.label}</InputLabel>
                     <Select
                         onChange={this.changeValue}
                         type={this.props.type}

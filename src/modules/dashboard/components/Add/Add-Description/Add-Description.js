@@ -40,11 +40,11 @@ class AddDescription extends React.Component {
     }
 
     submit = model => {
-        this.props.handleSubmit(model);
+        this.props.handleSubmit({...model, pictures: this.state.imgUploadUrls});
     }
 
     parentSubmit = () => {
-        this.props.handleSubmit(this.refs.form.getModel());
+        this.props.handleSubmit({...this.refs.form.getModel(), pictures: this.state.imgUploadUrls});
     }
 
     handleDrop = files => {
@@ -69,10 +69,10 @@ class AddDescription extends React.Component {
                 const fileURL = data.secure_url
                 console.log(fileURL);
                 this.setState(state => {
-                    state.imgUploadUrls.push(fileURL);
-                    return { imgUploadUrls: state.imgUploadUrls }
-                })
-
+                    const images = state.imgUploadUrls;
+                    images.push(fileURL);
+                    return {imgUploadUrls: images};
+                });
                 console.log(data);
             })
         });
@@ -108,7 +108,7 @@ class AddDescription extends React.Component {
                                             <input {...getInputProps()} />
                                             <div className="dropzone">
                                                 <img src={upload} alt="upload"></img>
-                                                <p>Drop an image or click to select a file to upload.</p>
+                                                <p>Drop images or click to select files to upload.</p>
                                             </div>
                                         </div>
                                     </section>

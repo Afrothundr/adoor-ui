@@ -8,6 +8,9 @@ import Tab from '@material-ui/core/Tab';
 import AddLocation from './Add-Location/Add-Location';
 import AddDetails from './Add-Details/Add-Details';
 import AddDescription from './Add-Description/Add-Description';
+import { connect } from 'react-redux';
+import { createListing } from '../../redux/actions/dashboard.actions';
+
 
 const styles = theme => ({
     root: {
@@ -55,6 +58,7 @@ class Add extends React.Component {
 
     handleLocationSubmit = location => {
         let currentIndex = this.state.tabIndex;
+        console.log(location);
         this.setState({
             location,
             tabIndex: currentIndex + 1
@@ -67,6 +71,23 @@ class Add extends React.Component {
         this.setState({
             details,
             tabIndex: currentIndex + 1
+        });
+    }
+
+    handleDescriptionSubmit = description => {
+        this.setState({
+            description
+        });
+        console.log({
+            ...this.state.location,
+            ...this.state.details,
+            ...this.state.description
+        })
+
+        this.props.createListing({
+            ...this.state.location,
+            ...this.state.details,
+            ...this.state.description
         });
     }
 
@@ -99,11 +120,10 @@ class Add extends React.Component {
                     </Tabs>
                 </AppBar>
                 <article>
-                    {tabIndex === 0 && <AddDescription
-                                            handleSubmit={this.handleDetailsSubmit} 
+                    {tabIndex === 0 && <AddLocation
+                                            handleSubmit={this.handleLocationSubmit} 
                                             isFormValid={this.handleValidCheck}
-                                            ref={this.addDetailsRef}
-                                            profileId={this.props.profileId}
+                                            ref={this.addLocationRef}
                                              />}
                     {tabIndex === 1 && <AddDetails
                                             handleSubmit={this.handleDetailsSubmit} 
@@ -111,9 +131,9 @@ class Add extends React.Component {
                                             ref={this.addDetailsRef}
                                              />}
                     {tabIndex === 2 && <AddDescription
-                                            handleSubmit={this.handleDetailsSubmit} 
+                                            handleSubmit={this.handleDescriptionSubmit} 
                                             isFormValid={this.handleValidCheck}
-                                            ref={this.addDetailsRef}
+                                            ref={this.addDescriptionRef}
                                             profileId={this.props.profileId}
                                              />}
                 </article>
@@ -126,4 +146,21 @@ Add.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Add);
+const mapStateToProps = state => {
+    return {
+        profilePending: state.dashboardReducer.profilePending,
+        profileLoadFailed: state.dashboardReducer.profileLoadFailed,
+        profile: state.dashboardReducer.profile
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        createListing: listing => dispatch(createListing(listing)),
+        // logOut: () => dispatch(logOut()),
+        // clearProfile: () => dispatch(clearProfile())
+    }
+}
+
+export default withStyles(styles, { withTheme: true })(connect(
+    mapStateToProps,
+    mapDispatchToProps)(Add));
