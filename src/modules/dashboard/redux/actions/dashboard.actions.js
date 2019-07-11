@@ -208,21 +208,22 @@ export const createListing = listing => {
     mutation {
         createListing(
         listing: {
-            pictures: ${listing.pictures}
-            description: ${listing.description},
-            address: ${listing.address},
-            city: ${listing.city},
+            pictures: [${listing.pictures.map(val => `"${val}"`)}],
+            description: "${listing.description}",
+            address: "${listing.address}",
+            city: "${listing.city}",
             zipcode: ${listing.zipcode},
             bedrooms: ${listing.bedrooms},
             bathrooms: ${listing.bathrooms},
             squareFootage: ${listing.squareFootage},
-            price: ${listing.price},
+            price: ${listing.price.slice(2)},
             yearBuilt: ${listing.yearBuilt},
-            heating: ${listing.heating},
-            cooling: ${listing.cooling},
-            kitchenType: ${listing.kitchenType},
-            laundry: ${listing.laundry},
-            fireplace: ${listing.fireplace}
+            heating: "${listing.heating}",
+            cooling: "${listing.cooling}",
+            kitchenType: "${listing.kitchenType}",
+            laundry: "${listing.laundry}",
+            fireplace: ${listing.fireplace || false},
+            priceHistory: [],
         }) {
             listings {
                 id

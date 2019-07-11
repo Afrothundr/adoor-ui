@@ -29,6 +29,7 @@ class Add extends React.Component {
             location: {},
             details: {},
             description: {},
+            pictures: [],
             isFormValid: false
         }
     }
@@ -74,20 +75,18 @@ class Add extends React.Component {
         });
     }
 
-    handleDescriptionSubmit = description => {
+    handleDescriptionSubmit = event => {
+        console.log(event);
         this.setState({
-            description
-        });
-        console.log({
-            ...this.state.location,
-            ...this.state.details,
-            ...this.state.description
-        })
-
-        this.props.createListing({
-            ...this.state.location,
-            ...this.state.details,
-            ...this.state.description
+            description: event.description,
+            pictures: event.pictures
+        }, () => {
+            this.props.createListing({
+                ...this.state.location,
+                ...this.state.details,
+                description: this.state.description,
+                pictures: this.state.pictures
+            });
         });
     }
 

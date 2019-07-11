@@ -95,7 +95,7 @@ class AddDetails extends React.Component {
                                 validationError="cooling type is required"
                                 required />
                             <Forms.Select
-                                name="kitchen"
+                                name="kitchenType"
                                 options={[
                                     'U-Shaped',
                                     'L-Shaped',
@@ -118,16 +118,17 @@ class AddDetails extends React.Component {
                         <div className="section-3">
                             <Forms.MaskedInput
                                 mask="9999"
-                                name="year built"
+                                name="yearBuilt"
                                 label="year built"
                                 type="text"
                                 validationError="year built is required"
                                 required />
                             <Forms.MaskedInput
                                 mask="9999"
-                                name="year renovated"
+                                name="renovatedYear"
                                 type="text"
                                 label="year renovated"
+                                value="null"
                             />
                             <Forms.CheckboxInput
                                 name="fireplace"
