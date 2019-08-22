@@ -34,6 +34,7 @@ class App extends Component {git
         <div className="App">
           <Router>
             <div className="App-Main">
+              <AuthenticatedRoute exact path="/" authed={this.props.token && true} component={Dashboard} />
               <Route path="/login" component={Login} />
               <AuthenticatedRoute path="/dashboard" authed={this.props.token && true} component={Dashboard} />
             </div>

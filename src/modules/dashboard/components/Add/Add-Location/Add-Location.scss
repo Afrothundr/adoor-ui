@@ -1,0 +1,41 @@
+@import "../../../../../theme.scss";
+.add-location {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  padding: 30px 25px;
+  background-color: white;
+  min-width: 400px;
+  max-width: 550px;
+  header {
+    color: $primary;
+    display: flex;
+    background-color: transparent;
+    align-items: center;
+    h3 {
+      margin-left: 15px;
+    }
+  }
+  .form {
+    align-items: flex-start;
+    padding: 10px 24px;
+    div {
+        width: 100%;
+        > div > div {
+            margin-bottom: 15px;
+        }
+        label {
+            color: rgba(0, 0, 0, 1);
+        }
+    }
+    .add-location-actions {
+        width: auto;
+        align-self: flex-end;
+        display: flex;
+        margin: 20px 0;
+        button {
+            text-transform: lowercase;
+        }
+    }
+  }
+
+}

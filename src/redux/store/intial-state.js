@@ -11,6 +11,7 @@ export default {
         profilePending: false,
         profileLoadFailed: false,
         profile: {
+            id: null,
             firstName: null,
             lastName: null,
             phoneNumber: null,

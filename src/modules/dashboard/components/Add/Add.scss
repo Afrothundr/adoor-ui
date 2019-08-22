@@ -1,0 +1,41 @@
+@import '../../../../theme.scss';
+
+.add-container {
+    width: 100%;
+    header {
+        box-shadow: none;
+        background-color: #fafafa;
+        .MuiTab-wrapper-162 {
+            display: flex;
+            flex-direction: row;
+            .MuiTab-labelContainer-163 {
+                padding: 3px 15px;
+                width: auto;
+            }
+        }
+        .wrapper {
+            div:first-child {
+                justify-content: space-around;
+            }
+        }
+        #add-container-action {
+            background-color: $primary;
+            color: white;
+            padding: 0;
+            font-size: 16px;
+        }
+        .tab-disabled {
+            background-color: #E0E0E0 !important;
+        }
+        .active-tab {
+            color: $primary;
+        }
+
+    }
+    article {
+        padding: 30px 8vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+}

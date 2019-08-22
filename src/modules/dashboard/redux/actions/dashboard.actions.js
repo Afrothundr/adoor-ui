@@ -26,6 +26,7 @@ export const loadProfile = () => {
         {
             seller
             {
+                id
                 firstName
                 lastName
                 phoneNumber
@@ -143,6 +144,11 @@ export const loadListings = () => {
                     squareFootage
                     bedrooms
                     bathrooms
+                    heating
+                    cooling
+                    kitchenType
+                    laundry
+                    description
                     views
                     created
                     updated
@@ -196,3 +202,86 @@ export const setExpiredListings = expiredListings => ({
     type: actions.SET_EXPIRED_LISTINGS,
     expiredListings
 })
+
+export const createListing = listing => {
+    console.log(listing);
+    const adoorApi = axios.create({
+        baseURL: environment.API_BASE_URL
+
+    });
+    const CREATE_LISTING = `
+    mutation {
+        createListing(
+        listing: {
+            pictures: [${listing.pictures.map(val => `"${val}"`)}],
+            description: "${listing.description}",
+            address: "${listing.address}",
+            city: "${listing.city}",
+            zipcode: ${listing.zipcode},
+            bedrooms: ${listing.bedrooms},
+            bathrooms: ${listing.bathrooms},
+            squareFootage: ${listing.squareFootage},
+            price: ${listing.price.slice(2)},
+            yearBuilt: ${listing.yearBuilt},
+            heating: "${listing.heating}",
+            cooling: "${listing.cooling}",
+            kitchenType: "${listing.kitchenType}",
+            laundry: "${listing.laundry}",
+            fireplace: ${listing.fireplace || false},
+            priceHistory: [],
+        }) {
+            listings {
+                id
+                pictures
+                address
+                price
+                lowPrice
+                highPrice
+                squareFootage
+                description
+                bedrooms
+                bathrooms
+                views
+                created
+                updated
+                matches {
+                    id
+                }
+            }
+        }
+    }
+    `;
+
+    return async (dispatch, getState) => {
+        // dispatch(profileLoading(true));
+        try {
+            const result = await adoorApi
+                .post(
+                    '',
+                    { query: CREATE_LISTING },
+                    {
+                        headers: { 'Authorization': "bearer " + getState().authReducer.token }
+                    }
+                );
+            // dispatch(profileLoading(false));
+            if (!result.data.errors) {
+                const expiredListings = [];
+                const validListings = [];
+                result.data.data.seller.listings.forEach(listing => {
+                    if (moment.utc(listing.updated).isBefore(moment().subtract(30, 'days'))) {
+                        expiredListings.push(listing);
+                    } else {
+                        validListings.push(listing);
+                    }
+                });
+                dispatch(setListings(validListings));
+                dispatch(setExpiredListings(expiredListings));
+            }
+        } catch (err) {
+            console.log(err);
+            // dispatch(profileLoading(false));
+            // dispatch(profileLoadFailure());
+        }
+    }
+
+};

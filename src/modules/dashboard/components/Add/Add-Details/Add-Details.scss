@@ -1,0 +1,115 @@
+@import "../../../../../theme.scss";
+.add-details {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  padding: 30px 25px;
+  background-color: white;
+  min-width: 600px;
+  max-width: 850px;
+  header {
+    color: $primary;
+    display: flex;
+    background-color: transparent;
+    align-items: center;
+    h3 {
+      margin-left: 15px;
+    }
+  }
+  .form {
+    // align-items: flex-start;
+    padding: 10px 24px;
+    div {
+        > div > div {
+            margin-bottom: 15px;
+        }
+        label {
+            color: rgba(0, 0, 0, 1);
+        }
+    }
+    .wrapper {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-areas: 
+                "section1 section2"
+                "section1 section2"
+                "section3 section3";
+        gap: 0px 10px;
+        .section-1 {
+            grid-area: section1;
+            display: grid;
+            padding: 0 15px;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-areas: 
+                "bedrooms bathrooms"
+                "squarefootage squarefootage"
+                "price price";
+            gap: 0px 10px;
+            div:nth-child(1) {
+                grid-area: bedrooms;
+                width: 100%;
+            }
+            div:nth-child(2) {
+                grid-area: bathrooms;
+                width: 100%;
+            }
+            div:nth-child(3) {
+                grid-area: squarefootage;
+                width: 100%;
+            }
+            div:nth-child(4) {
+                grid-area: price;
+                width: 100%;
+            }
+        }
+        .section-2 {
+            grid-area: section2;
+            display: grid;
+            padding: 0 15px;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-areas: 
+                "heat cool"
+                "kitchen kitchen"
+                "laundry laundry";
+            gap: 0px 10px;
+            div:nth-child(1) {
+                grid-area: heat;
+                margin-bottom: 0;
+                width: 100%;
+            }
+            div:nth-child(2) {
+                grid-area: cool;
+                width: 100%;
+            }
+            div:nth-child(3) {
+                grid-area: kitchen;
+                width: 100%;
+            }
+            div:nth-child(4) {
+                grid-area: laundry;
+                width: 100%;
+            }
+        }
+        .section-3 {
+            grid-area: section3;
+            padding: 0 15px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+    .add-details-actions {
+        width: auto;
+        align-self: flex-end;
+        display: flex;
+        margin: 20px 0;
+        button {
+            text-transform: lowercase;
+        }
+    }
+  }
+
+}

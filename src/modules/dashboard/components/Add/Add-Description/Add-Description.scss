@@ -1,0 +1,79 @@
+@import "../../../../../theme.scss";
+.add-description {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  padding: 30px 25px;
+  background-color: white;
+  min-width: 400px;
+  max-width: 550px;
+  header {
+    color: $primary;
+    display: flex;
+    background-color: transparent;
+    align-items: center;
+    h3 {
+      margin-left: 15px;
+    }
+  }
+  .form {
+    align-items: flex-start;
+    padding: 10px 24px;
+    div {
+      width: 100%;
+      > div > div {
+        margin-bottom: 15px;
+      }
+      label {
+        color: rgba(0, 0, 0, 1);
+      }
+    }
+    .add-description-actions {
+      width: auto;
+      align-self: flex-end;
+      display: flex;
+      margin: 20px 0;
+      button {
+        text-transform: lowercase;
+      }
+    }
+
+    .dropzone {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 3px dotted lightgrey;
+      background-color: snow;
+      padding: 30px 10px;
+
+      img {
+        width: 50%;
+      }
+    }
+
+    .image-preview {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 15px;
+
+      &-card {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        img {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          height: 100%;
+          width: auto;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
+}
