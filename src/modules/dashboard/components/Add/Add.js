@@ -96,6 +96,15 @@ class Add extends React.Component {
         })
     }
 
+    getTabText = tabIndex => {
+        switch (tabIndex) {
+            case 0: return 'next: features';
+            case 1: return 'next: pictures';
+            case 2: return 'next: finish!';
+            default: return null;
+        }
+    }
+
 
     render() {
         const { tabIndex } = this.state;
@@ -115,7 +124,7 @@ class Add extends React.Component {
                         <Tab label="where's it at?" icon={<i className="fas fa-map-marker-alt fa-2x"></i>} className={tabIndex === 0 ? 'active-tab' : ''} disabled={true} />
                         <Tab label="what's inside?" icon={<i className="fas fa-home fa-2x"></i>} className={tabIndex === 1 ? 'active-tab' : ''} disabled={true} />
                         <Tab label="what's it look like?" icon={<i className="fas fa-images fa-2x"></i>} className={tabIndex === 2 ? 'active-tab' : ''} disabled={true} />
-                        <Tab label={`next: ${tabIndex}`} id="add-container-action" className={!this.state.isFormValid ? 'tab-disabled' : ''} disabled={!this.state.isFormValid} />
+                        <Tab label={this.getTabText(tabIndex)} id="add-container-action" className={!this.state.isFormValid ? 'tab-disabled' : ''} disabled={!this.state.isFormValid} />
                     </Tabs>
                 </AppBar>
                 <article>

@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Link, NavLink } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import logo from '../../../../images/logo.png';
 import { logOut } from '../../../auth/redux/actions/auth.actions';
 import { clearProfile, loadProfile } from '../../redux/actions/dashboard.actions';
@@ -24,6 +24,7 @@ import Profile from '../Profile/Profile';
 import './Dashboard.scss';
 import Manage from '../Manage/Manage';
 import Add from '../Add/Add';
+import Preview from '../Preview/Preview';
 
 const drawerWidth = 240;
 
@@ -118,6 +119,7 @@ class Dashboard extends React.Component {
 
     render() {
         const { classes, theme } = this.props;
+        console.log(this.props.profile.listings);
         return (
             <div className={classes.root}>
                 <CssBaseline />
@@ -201,6 +203,7 @@ class Dashboard extends React.Component {
                     <Route path="/dashboard/add-listing"
                         render={(props) => <Add {...props} profileId={this.props.profile.id} />}
                     />
+                    <Route path="/dashboard/preview" render={(props) => <Preview {...props} listing={this.props.profile.listings[0]} />} />
                 </main>
             </div>
         );

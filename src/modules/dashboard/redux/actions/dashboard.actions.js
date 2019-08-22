@@ -144,6 +144,11 @@ export const loadListings = () => {
                     squareFootage
                     bedrooms
                     bathrooms
+                    heating
+                    cooling
+                    kitchenType
+                    laundry
+                    description
                     views
                     created
                     updated
@@ -233,6 +238,7 @@ export const createListing = listing => {
                 lowPrice
                 highPrice
                 squareFootage
+                description
                 bedrooms
                 bathrooms
                 views
