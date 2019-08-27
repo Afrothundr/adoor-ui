@@ -199,11 +199,11 @@ class Dashboard extends React.Component {
                 </Drawer>
                 <main className={classes.content}>
                     <Route path="/dashboard/profile" component={Profile} />
-                    <Route path="/dashboard/manage/:expired" component={Manage} />
+                    <Route exact path="/dashboard/manage/" component={Manage} />
                     <Route path="/dashboard/add-listing"
                         render={(props) => <Add {...props} profileId={this.props.profile.id} />}
                     />
-                    <Route path="/dashboard/preview" render={(props) => <Preview {...props} listing={this.props.profile.listings[0]} />} />
+                    <Route path="/dashboard/manage/preview/:listingId" exact render={(props) => <Preview {...props} listings={this.props.listings} />} />
                 </main>
             </div>
         );
@@ -214,7 +214,8 @@ const mapStateToProps = state => {
     return {
         profilePending: state.dashboardReducer.profilePending,
         profileLoadFailed: state.dashboardReducer.profileLoadFailed,
-        profile: state.dashboardReducer.profile
+        profile: state.dashboardReducer.profile,
+        listings: state.dashboardReducer.profile.listings
     }
 }
 const mapDispatchToProps = dispatch => {
