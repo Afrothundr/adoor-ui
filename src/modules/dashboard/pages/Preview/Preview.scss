@@ -1,0 +1,16 @@
+@import '../../../../theme.scss';
+.listing-preview {
+    border-radius: 15px;
+    box-shadow: $box-shadow;
+    margin: 1rem;
+    overflow: hidden;
+    position: relative;
+    width: 500px;
+
+    &-panel {
+        background-color:hsl(0, 0%, 95%) !important;
+    }
+    .slide {
+        height: 300px;
+    }
+}

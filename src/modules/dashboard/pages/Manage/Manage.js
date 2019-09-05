@@ -20,12 +20,13 @@ class Manage extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.loadListings();
-        const paramResult = this.props.match.params.expired === 'active';
-        this.setState({
-            showActiveListings: paramResult
-        })
+        if(this.props.location.state)
+        {
+            const { showActiveListings } = this.props.location.state;
+             this.setState({showActiveListings});
+         }
     }
 
     toggleTables = linkThatWasClicked => {
@@ -42,6 +43,11 @@ class Manage extends React.Component {
         }
     }
 
+    handleNavigateToEditPage = id => {
+        console.log(`this is navigate to: ${id}`);
+        this.props.history.push(`/dashboard/manage/preview/${id}`);
+    }
+
     render() {
         return (
             <section className="manage">
@@ -54,7 +60,7 @@ class Manage extends React.Component {
                         <h3 className={!this.state.showActiveListings ? 'expired-color' : 'inactive'}>expired</h3>
                     </a>
                 </div>
-                <ManageTable listings={this.state.showActiveListings ? this.props.profile.listings : this.props.profile.expiredListings} />
+                <ManageTable navigateToEditPage={this.handleNavigateToEditPage} listings={this.state.showActiveListings ? this.props.profile.listings : this.props.profile.expiredListings} />
             </section>
         )
     }

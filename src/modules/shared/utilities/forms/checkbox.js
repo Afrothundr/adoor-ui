@@ -21,6 +21,12 @@ class CheckboxInput extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({
+            isChecked: this.props.value
+        })
+    }
+
     changeValue(event) {
         // setValue() will set the value of the component, which in
         // turn will validate it and the rest of the form
@@ -37,15 +43,9 @@ class CheckboxInput extends React.Component {
         const className = this.props.showRequired() ? 'required-input' : '';
         return (
             <div className={className}>
-                {/* <TextField
-                    onChange={this.changeValue}
-                    type={this.props.type}
-                    value={this.props.getValue() || ''}
-                    label={this.props.label}
-                /> */}
                 <FormControl component="fieldset">
                     <FormControlLabel
-                        control={<Checkbox checked={this.state.isChecked} onChange={this.changeValue} value="true" />}
+                        control={<Checkbox checked={this.state.isChecked} onChange={this.changeValue} />}
                         label={this.props.label}
                     />
                 </FormControl>

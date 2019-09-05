@@ -23,7 +23,7 @@ export const PreviewHeader = (props) => {
     <div style={containerStyle}>
         <div style={headerStyle}>
         <NumberFormat value={props.listing.price} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={value => <h1 style={{color: 'hsla(0, 0%, 17%, 0.75)'}}>{value}</h1>} />
-            <h5><i class="fas fa-ruler-combined"></i> {props.listing.squareFootage} ft</h5>
+            <h5><i className="fas fa-ruler-combined"></i> {props.listing.squareFootage} ft</h5>
         </div>
         <p>{props.listing.description}</p>
     </div>

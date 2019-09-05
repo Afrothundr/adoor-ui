@@ -63,6 +63,12 @@
         width: 200px;
         height: 200px;
         overflow: hidden;
+        button {
+          position: absolute;
+          bottom: 1rem;
+          right: 1rem;
+          z-index: 2;
+        }
         img {
           position: absolute;
           left: 50%;

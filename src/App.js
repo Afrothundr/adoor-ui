@@ -4,7 +4,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Login from './modules/auth/components/Login/Login';
-import Dashboard from './modules/dashboard/components/Dashboard/Dashboard';
+import Dashboard from './modules/dashboard/pages/Dashboard/Dashboard';
 
 import { connect } from 'react-redux';
 import { AuthenticatedRoute } from './modules/auth/protected-route';

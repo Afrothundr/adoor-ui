@@ -27,6 +27,7 @@ class AddDetails extends React.Component {
     }
 
     submit = model => {
+        console.log(model);
         this.props.handleSubmit(model);
     }
 
@@ -48,12 +49,14 @@ class AddDetails extends React.Component {
                                 type="number"
                                 validationError="bedrooms are required"
                                 label="bedrooms"
+                                value={this.props.details.bedrooms}
                                 required />
                             <Forms.Input
                                 name="bathrooms"
                                 label="bathrooms"
                                 type="number"
                                 validationError="bathrooms are required"
+                                value={this.props.details.bathrooms}
                                 required />
                             <Forms.MaskedInput
                                 name="squareFootage"
@@ -61,12 +64,14 @@ class AddDetails extends React.Component {
                                 mask="999999"
                                 validationError="square footage is required"
                                 label="square footage"
+                                value={this.props.details.squareFootage}
                                 required />
                             <Forms.MaskedInput
                                 name="price"
                                 mask="$ 999999999"
                                 label="price"
                                 type="text"
+                                value={this.props.details.price}
                                 validationError="price is required"
                                 required />
                         </div>
@@ -83,6 +88,7 @@ class AddDetails extends React.Component {
                                 ]}
                                 validationError="heating type is required"
                                 label="heating type"
+                                value={this.props.details.heating}
                                 required />
                             <Forms.Select
                                 name="cooling"
@@ -93,6 +99,7 @@ class AddDetails extends React.Component {
                                     'Ductless-Split',
                                 ]}
                                 validationError="cooling type is required"
+                                value={this.props.details.cooling}
                                 required />
                             <Forms.Select
                                 name="kitchenType"
@@ -103,6 +110,7 @@ class AddDetails extends React.Component {
                                 ]}
                                 validationError="kitchen type is required"
                                 label="kitchen type"
+                                value={this.props.details.kitchenType}
                                 required />
                             <Forms.Select
                                 name="laundry"
@@ -113,6 +121,7 @@ class AddDetails extends React.Component {
                                     'none',
                                 ]}
                                 validationError="laundry type is required"
+                                value={this.props.details.laundry}
                                 required />
                         </div>
                         <div className="section-3">
@@ -122,23 +131,25 @@ class AddDetails extends React.Component {
                                 label="year built"
                                 type="text"
                                 validationError="year built is required"
+                                value={this.props.details.yearBuilt}
                                 required />
                             <Forms.MaskedInput
                                 mask="9999"
                                 name="renovatedYear"
                                 type="text"
                                 label="year renovated"
-                                value="null"
+                                value={this.props.details.renovatedYear}
                             />
                             <Forms.CheckboxInput
                                 name="fireplace"
                                 label="does it have a fireplace?"
+                                value={this.props.details.fireplace}
                             />
                         </div>
                     </div>
                     <div className="add-details-actions">
                         <Button onClick={this.handleClearClick} type="button">clear</Button>
-                        <Button variant="contained" color="primary" disabled={!this.state.canSubmit} type="submit">submit</Button>
+                        <Button variant="contained" color="primary" disabled={!this.state.canSubmit} type="submit">next</Button>
                     </div>
                 </Formsy>
             </div>

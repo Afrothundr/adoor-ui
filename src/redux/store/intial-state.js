@@ -20,7 +20,8 @@ export default {
             company: null,
             profilePicture: null,
             title: null,
-            listings: []
+            listings: [],
+            expiredListings: []
         }
     }
   };

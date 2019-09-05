@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
 import { Route, NavLink } from 'react-router-dom';
 import logo from '../../../../images/logo.png';
 import { logOut } from '../../../auth/redux/actions/auth.actions';
-import { clearProfile, loadProfile } from '../../redux/actions/dashboard.actions';
+import { clearProfile, loadProfile, loadListings } from '../../redux/actions/dashboard.actions';
 import Profile from '../Profile/Profile';
 import './Dashboard.scss';
 import Manage from '../Manage/Manage';
@@ -99,8 +99,10 @@ class Dashboard extends React.Component {
         };
     }
     componentWillMount() {
+        console.log(this.props);
         if (!this.props.profile.email) {
             this.props.loadProfile();
+            this.props.loadListings();
         }
     }
 
@@ -119,7 +121,7 @@ class Dashboard extends React.Component {
 
     render() {
         const { classes, theme } = this.props;
-        console.log(this.props.profile.listings);
+        console.log(this.props.profile.expiredListings);
         return (
             <div className={classes.root}>
                 <CssBaseline />
@@ -183,7 +185,7 @@ class Dashboard extends React.Component {
                             <ListItemIcon><div><i className="fas fa-poll fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='analytics' />
                         </ListItem>
-                        <ListItem button component={NavLink} to="/dashboard/manage/active" activeClassName="link-active">
+                        <ListItem button component={NavLink} to="/dashboard/manage" activeClassName="link-active">
                             <ListItemIcon><div><i className="fas fa-briefcase fa-2x"></i></div></ListItemIcon>
                             <ListItemText primary='manage listings' />
                         </ListItem>
@@ -203,7 +205,7 @@ class Dashboard extends React.Component {
                     <Route path="/dashboard/add-listing"
                         render={(props) => <Add {...props} profileId={this.props.profile.id} />}
                     />
-                    <Route path="/dashboard/manage/preview/:listingId" exact render={(props) => <Preview {...props} listings={this.props.listings} />} />
+                    <Route path="/dashboard/manage/preview/:listingId" exact render={(props) => <Preview {...props} listings={[...this.props.expiredListings, ...this.props.listings]} />} />
                 </main>
             </div>
         );
@@ -215,12 +217,14 @@ const mapStateToProps = state => {
         profilePending: state.dashboardReducer.profilePending,
         profileLoadFailed: state.dashboardReducer.profileLoadFailed,
         profile: state.dashboardReducer.profile,
-        listings: state.dashboardReducer.profile.listings
+        listings: state.dashboardReducer.profile.listings,
+        expiredListings: state.dashboardReducer.profile.expiredListings
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
         loadProfile: () => dispatch(loadProfile()),
+        loadListings: () => dispatch(loadListings()),
         logOut: () => dispatch(logOut()),
         clearProfile: () => dispatch(clearProfile())
     }
