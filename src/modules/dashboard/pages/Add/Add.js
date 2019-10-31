@@ -100,7 +100,6 @@ class Add extends React.Component {
 
     handleDetailsSubmit = details => {
         let currentIndex = this.state.tabIndex;
-        console.log(details);
         this.setState({
             details,
             tabIndex: currentIndex + 1
