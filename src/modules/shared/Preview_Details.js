@@ -21,7 +21,7 @@ export const PreviewDetails = (props) => {
     <section style={sectionStyle}>
         <div style={addressStyle}>
             <h5>{props.listing.address}</h5>
-            <h3>Kansas City, MO</h3>
+            <h3>{props.listing.city}, MO</h3>
         </div>
         <div style={featureStyle}>
             <h3>{props.listing.bathrooms}   <i class="fas fa-bed"></i></h3>

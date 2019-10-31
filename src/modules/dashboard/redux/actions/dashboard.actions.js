@@ -37,6 +37,27 @@ export const loadProfile = () => {
                 title
                 listings {
                     id
+                    pictures
+                    address
+                    city
+                    zipcode
+                    price
+                    lowPrice
+                    highPrice
+                    squareFootage
+                    bedrooms
+                    bathrooms
+                    heating
+                    cooling
+                    kitchenType
+                    laundry
+                    description
+                    views
+                    created
+                    updated
+                    matches {
+                        id
+                    }
                 }
             }
         }
@@ -55,7 +76,20 @@ export const loadProfile = () => {
                 );
             dispatch(profileLoading(false));
             if (!result.data.errors) {
-                dispatch(setProfile(result.data.data.seller));
+                const expiredListings = [];
+                const validListings = [];
+                result.data.data.seller.listings.forEach(listing => {
+                    if (moment.utc(listing.updated).isBefore(moment().subtract(30, 'days'))) {
+                        expiredListings.push(listing);
+                    } else {
+                        validListings.push(listing);
+                    }
+                });
+                dispatch(setProfile({
+                    ...result.data.data.seller,
+                    listings: validListings,
+                    expiredListings: expiredListings
+                }));
             }
         } catch (err) {
             console.log(err);
@@ -138,6 +172,8 @@ export const loadListings = () => {
                     id
                     pictures
                     address
+                    city
+                    zipcode
                     price
                     lowPrice
                     highPrice
@@ -152,6 +188,9 @@ export const loadListings = () => {
                     views
                     created
                     updated
+                    fireplace
+                    yearBuilt
+                    renovatedYear
                     matches {
                         id
                     }
@@ -221,7 +260,7 @@ export const createListing = listing => {
             bedrooms: ${listing.bedrooms},
             bathrooms: ${listing.bathrooms},
             squareFootage: ${listing.squareFootage},
-            price: ${listing.price.slice(2)},
+            price: ${Array.isArray(listing.price) ? listing.price.slice(2) : listing.price},
             yearBuilt: ${listing.yearBuilt},
             heating: "${listing.heating}",
             cooling: "${listing.cooling}",
@@ -234,16 +273,25 @@ export const createListing = listing => {
                 id
                 pictures
                 address
+                city
+                zipcode
                 price
                 lowPrice
                 highPrice
                 squareFootage
-                description
                 bedrooms
                 bathrooms
+                heating
+                cooling
+                kitchenType
+                laundry
+                description
                 views
                 created
                 updated
+                fireplace
+                yearBuilt
+                renovatedYear
                 matches {
                     id
                 }
@@ -285,3 +333,82 @@ export const createListing = listing => {
     }
 
 };
+
+export const updateListing = (id, listing)  => {
+    console.log(id);
+    console.log(listing);
+    const adoorApi = axios.create({
+        baseURL: environment.API_BASE_URL
+    });
+    const UPDATE_LISTING = `
+    mutation {
+        updateListing(
+            listingId: "${id}",
+            listingUpdate: {
+                pictures: [${listing.pictures.map(val => `"${val}"`)}],
+                description: "${listing.description}",
+                address: "${listing.address}",
+                city: "${listing.city}",
+                zipcode: ${listing.zipcode},
+                bedrooms: ${listing.bedrooms},
+                bathrooms: ${listing.bathrooms},
+                squareFootage: ${listing.squareFootage},
+                price: ${typeof listing.price === 'string' ? listing.price.slice(2) : listing.price},
+                yearBuilt: ${listing.yearBuilt},
+                renovatedYear: ${listing.renovatedYear},
+                heating: "${listing.heating}",
+                cooling: "${listing.cooling}",
+                kitchenType: "${listing.kitchenType}",
+                laundry: "${listing.laundry}",
+                fireplace: ${listing.fireplace || false},
+                lowPrice: ${0},
+                highPrice: ${0}
+            }) {
+                    id
+                    pictures
+                    address
+                    city
+                    zipcode
+                    price
+                    lowPrice
+                    highPrice
+                    squareFootage
+                    bedrooms
+                    bathrooms
+                    heating
+                    cooling
+                    kitchenType
+                    laundry
+                    description
+                    views
+                    created
+                    updated
+                    fireplace
+                    yearBuilt
+                    renovatedYear
+                    matches {
+                        id
+                    }
+            }
+    }
+    `;
+
+    return async (dispatch, getState) => {
+        // dispatch(profileLoading(true));
+        try {
+            const result = await adoorApi
+                .post(
+                    '',
+                    { query: UPDATE_LISTING },
+                    {
+                        headers: { 'Authorization': "bearer " + getState().authReducer.token }
+                    }
+                );
+            if (!result.data.errors) {
+                dispatch(loadListings());
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}

@@ -91,7 +91,7 @@ class Profile extends React.Component {
                         </article>
                     </div>
                 }
-                { !this.state.isEditing && <ProfileActions profile={this.props.profile} /> }
+                { !this.state.isEditing && <ProfileActions listings={this.props.profile.listings} expiredListings={this.props.profile.expiredListings} /> }
             </section>
         )
     }

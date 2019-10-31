@@ -9,6 +9,7 @@ import { environment } from '../../../../../environments';
 import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import upload from '../../../../../images/imgUpload.svg'
+import { ImagePreview } from '../Image-Preview';
 
 class AddDescription extends React.Component {
     constructor() {
@@ -18,6 +19,12 @@ class AddDescription extends React.Component {
             imgUploadUrls: [],
             isLoading: false
         };
+    }
+
+    componentDidMount() {
+        this.setState({
+            imgUploadUrls: this.props.pictures
+        })
     }
 
     disableButton = () => {
@@ -40,11 +47,11 @@ class AddDescription extends React.Component {
     }
 
     submit = model => {
-        this.props.handleSubmit({...model, pictures: this.state.imgUploadUrls});
+        this.props.handleSubmit({ ...model, pictures: this.state.imgUploadUrls });
     }
 
     parentSubmit = () => {
-        this.props.handleSubmit({...this.refs.form.getModel(), pictures: this.state.imgUploadUrls});
+        this.props.handleSubmit({ ...this.refs.form.getModel(), pictures: this.state.imgUploadUrls });
     }
 
     handleDrop = files => {
@@ -71,7 +78,7 @@ class AddDescription extends React.Component {
                 this.setState(state => {
                     const images = state.imgUploadUrls;
                     images.push(fileURL);
-                    return {imgUploadUrls: images};
+                    return { imgUploadUrls: images };
                 });
                 console.log(data);
             })
@@ -83,6 +90,11 @@ class AddDescription extends React.Component {
             });
 
         });
+    }
+
+    handleImageDelete = index => {
+        const imgUploadUrls = this.state.imgUploadUrls.splice(index, 1);
+        this.setState(imgUploadUrls);
     }
 
     render() {
@@ -97,6 +109,7 @@ class AddDescription extends React.Component {
                         type="text"
                         validationError="description is required"
                         label="tell us more about this listing…"
+                        value={this.props.description}
                         required />
                     <Dropzone accept="image/*" onDrop={acceptedFiles => this.handleDrop(acceptedFiles)}>
                         {({ getRootProps, getInputProps }) => (
@@ -119,9 +132,7 @@ class AddDescription extends React.Component {
                                     <div className="image-preview">
                                         {
                                             this.state.imgUploadUrls.map((url, index) =>
-                                                <div className="image-preview-card" key={index}>
-                                                    <img alt="preview" src={url}></img>
-                                                </div>
+                                                <ImagePreview index={index} url={url} handleImageDelete={this.handleImageDelete} />
                                             )
                                         }
                                     </div>

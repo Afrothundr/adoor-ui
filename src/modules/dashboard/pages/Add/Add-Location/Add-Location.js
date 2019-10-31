@@ -45,12 +45,14 @@ class AddLocation extends React.Component {
                         type="text"
                         validationError="address is required"
                         label="address"
+                        value={this.props.location.address}
                         required />
                     <Forms.Input
                         name="city"
                         label="city"
                         type="text"
                         validationError="city is required"
+                        value={this.props.location.city}
                         required />
                     <Forms.MaskedInput
                         mask="99999"
@@ -59,11 +61,12 @@ class AddLocation extends React.Component {
                         type="text"
                         validations="minLength:5"
                         validationError="valid zipcode is required"
+                        value={this.props.location.zipcode}
                         required
                     />
                     <div className="add-location-actions">
                         <Button onClick={this.handleClearClick} type="button">clear</Button>
-                        <Button variant="contained" color="primary" disabled={!this.state.canSubmit} type="submit">submit</Button>
+                        <Button variant="contained" color="primary" disabled={!this.state.canSubmit} type="submit">next</Button>
                     </div>
                 </Formsy>
             </div>

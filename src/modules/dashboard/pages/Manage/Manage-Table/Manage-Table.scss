@@ -28,6 +28,11 @@
       display: grid;
       grid-template-columns: repeat(9, minmax(50px, 1fr));
       align-items: center;
+      &:hover {
+        transition: background-color 0.5s ease;
+        background-color: #F2F2F2;
+        cursor: pointer;
+      }
     }
     &-cell {
       padding: 15px;

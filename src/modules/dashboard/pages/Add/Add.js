@@ -9,7 +9,7 @@ import AddLocation from './Add-Location/Add-Location';
 import AddDetails from './Add-Details/Add-Details';
 import AddDescription from './Add-Description/Add-Description';
 import { connect } from 'react-redux';
-import { createListing } from '../../redux/actions/dashboard.actions';
+import { createListing, updateListing } from '../../redux/actions/dashboard.actions';
 
 
 const styles = theme => ({
@@ -30,8 +30,40 @@ class Add extends React.Component {
             details: {},
             description: {},
             pictures: [],
-            isFormValid: false
+            isFormValid: false,
+            isEditing: false,
+            listingId: null
         }
+    }
+
+    componentDidMount() {
+        if(this.props.location.state)
+        {
+            const listing = this.props.location.state.listing;
+            const previousListing = {
+                location: {
+                    address: listing.address,
+                    city: listing.city,
+                    zipcode: listing.zipcode.toString()
+                },
+                details: {
+                    bedrooms: listing.bedrooms,
+                    bathrooms: listing.bathrooms,
+                    squareFootage: listing.squareFootage,
+                    price: listing.price,
+                    heating: listing.heating,
+                    cooling: listing.cooling,
+                    kitchenType: listing.kitchenType,
+                    laundry: listing.laundry,
+                    fireplace: listing.fireplace,
+                    yearBuilt: listing.yearBuilt,
+                    renovatedYear: listing.renovatedYear
+                },
+                description: listing.description,
+                pictures: listing.pictures
+            };
+             this.setState({...previousListing, isEditing: true, listingId: listing.id}, () => console.log(this.state));
+         }
     }
 
     addLocationRef = React.createRef();
@@ -59,7 +91,6 @@ class Add extends React.Component {
 
     handleLocationSubmit = location => {
         let currentIndex = this.state.tabIndex;
-        console.log(location);
         this.setState({
             location,
             tabIndex: currentIndex + 1
@@ -69,6 +100,7 @@ class Add extends React.Component {
 
     handleDetailsSubmit = details => {
         let currentIndex = this.state.tabIndex;
+        console.log(details);
         this.setState({
             details,
             tabIndex: currentIndex + 1
@@ -81,12 +113,20 @@ class Add extends React.Component {
             description: event.description,
             pictures: event.pictures
         }, () => {
+            this.state.isEditing ? 
+            this.props.updateListing(this.state.listingId, {
+                ...this.state.location,
+                ...this.state.details,
+                description: this.state.description,
+                pictures: this.state.pictures
+            }) :
             this.props.createListing({
                 ...this.state.location,
                 ...this.state.details,
                 description: this.state.description,
                 pictures: this.state.pictures
             });
+            this.props.history.push('/dashboard/manage');
         });
     }
 
@@ -132,17 +172,21 @@ class Add extends React.Component {
                                             handleSubmit={this.handleLocationSubmit} 
                                             isFormValid={this.handleValidCheck}
                                             ref={this.addLocationRef}
+                                            location={this.state.location}
                                              />}
                     {tabIndex === 1 && <AddDetails
                                             handleSubmit={this.handleDetailsSubmit} 
                                             isFormValid={this.handleValidCheck}
                                             ref={this.addDetailsRef}
+                                            details={this.state.details}
                                              />}
                     {tabIndex === 2 && <AddDescription
                                             handleSubmit={this.handleDescriptionSubmit} 
                                             isFormValid={this.handleValidCheck}
                                             ref={this.addDescriptionRef}
                                             profileId={this.props.profileId}
+                                            description={this.state.description}
+                                            pictures={this.state.pictures}
                                              />}
                 </article>
             </div>
@@ -164,6 +208,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         createListing: listing => dispatch(createListing(listing)),
+        updateListing: (id, listing) => dispatch(updateListing(id, listing))
         // logOut: () => dispatch(logOut()),
         // clearProfile: () => dispatch(clearProfile())
     }

@@ -7,31 +7,46 @@ import { ImageCarousel } from '../../../shared/utilities/Image_Carousel';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
+import { EditButton } from './components/EditButton';
+
+
 
 
 class Preview extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
+            currentListing: this.getListing(this.props.match.params.listingId),
+            isEditing: false
         }
     }
+
+
+    getListing = id => {
+        return this.props.listings.find(listing => listing.id === id) || null;
+    }
+
+    handleEditClick = () => {
+        const isEditing = !this.state.isEditing
+        this.setState({isEditing});
+    }
+
     render() {
-        console.log(this.props);
-        return (
+        console.log(this.state.currentListing);
+        return !this.state.isEditing ?
             <article className="listing-preview">
-                <ImageCarousel listing={this.props.listing} />
-                <PreviewHeader listing={this.props.listing} />
+                <EditButton listing={this.state.currentListing}></EditButton>
+                <ImageCarousel listing={this.state.currentListing} />
+                <PreviewHeader listing={this.state.currentListing} />
                 <ExpansionPanel>
                     <ExpansionPanelSummary className="listing-preview-panel">
-                        <PreviewDetails listing={this.props.listing} />
+                        <PreviewDetails listing={this.state.currentListing} />
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                        <PreviewExpansion listing={this.props.listing}/>
+                        <PreviewExpansion listing={this.state.currentListing}/>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-            </article>
-        );
+            </article> : <div></div>;
     }
 
 }
