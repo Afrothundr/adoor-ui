@@ -14,7 +14,8 @@ export const ManageTableRow = ({ listing, handleRowClick}) => (
         </div>
         <div className="manage-table-cell price">
             <NumberFormat value={listing.price} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={value => <p>{value}</p>} />
-            <p>{listing.lowPrice && listing.lowPrice.toString().substring(0, listing.lowPrice.toString().length - 3) + ' K'} {listing.highPrice && '-' + listing.highPrice.toString().substring(0, listing.highPrice.toString().length - 3) + ' K'}
+            <p>
+                {listing.lowPrice && listing.lowPrice !== 0 && listing.lowPrice.toString().substring(0, listing.lowPrice.toString().length - 3) + ' K'} {listing.highPrice && listing.highPrice !== 0 && '-' + listing.highPrice.toString().substring(0, listing.highPrice.toString().length - 3) + ' K'}
             </p>
         </div>
         <div className="manage-table-cell sqft">

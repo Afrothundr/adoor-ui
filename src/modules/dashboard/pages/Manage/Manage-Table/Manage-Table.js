@@ -24,7 +24,7 @@ class ManageTable extends React.Component {
                 </div>
                 <div className="manage-table-body">
                     {this.props.listings && this.props.listings.map(listing => 
-                           <ManageTableRow listing={listing}  handleRowClick={this.handleRowClick}/>
+                           <ManageTableRow key={listing.id} listing={listing}  handleRowClick={this.handleRowClick}/>
                     )}
                 </div>
             </div>

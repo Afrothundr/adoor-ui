@@ -12,7 +12,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -25,6 +24,8 @@ import './Dashboard.scss';
 import Manage from '../Manage/Manage';
 import Add from '../Add/Add';
 import Preview from '../Preview/Preview';
+import classNames from 'classnames';
+
 
 const drawerWidth = 240;
 
